@@ -1,0 +1,172 @@
+[
+  {
+    "ability": "Night Kill",
+    "card_id": 1,
+    "class": "RoleCard",
+    "description": "Kill one villager each night. Win when werewolves equal or outnumber villagers.",
+    "id": 1,
+    "role_name": "Werewolf",
+    "team": "Werewolf",
+    "win_condition": "Eliminate all villagers"
+  },
+  {
+    "ability": "Night Kill",
+    "card_id": 2,
+    "class": "RoleCard",
+    "description": "Kill one villager each night. Win when werewolves equal or outnumber villagers.",
+    "id": 2,
+    "role_name": "Werewolf",
+    "team": "Werewolf",
+    "win_condition": "Eliminate all villagers"
+  },
+  {
+    "ability": "Night Kill",
+    "card_id": 3,
+    "class": "RoleCard",
+    "description": "Kill one villager each night. Win when werewolves equal or outnumber villagers.",
+    "id": 3,
+    "role_name": "Werewolf",
+    "team": "Werewolf",
+    "win_condition": "Eliminate all villagers"
+  },
+  {
+    "ability": "Night Kill",
+    "card_id": 4,
+    "class": "RoleCard",
+    "description": "Kill one villager each night. Win when werewolves equal or outnumber villagers.",
+    "id": 4,
+    "role_name": "Werewolf",
+    "team": "Werewolf",
+    "win_condition": "Eliminate all villagers"
+  },
+  {
+    "ability": "Night Vision",
+    "card_id": 5,
+    "class": "RoleCard",
+    "description": "Check one player's identity each night.",
+    "id": 5,
+    "role_name": "Seer",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Heal or Poison",
+    "card_id": 6,
+    "class": "RoleCard",
+    "description": "Has one healing potion and one poison potion.",
+    "id": 6,
+    "role_name": "Witch",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Revenge Shot",
+    "card_id": 7,
+    "class": "RoleCard",
+    "description": "Can shoot one player when eliminated.",
+    "id": 7,
+    "role_name": "Hunter",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Night Protection",
+    "card_id": 8,
+    "class": "RoleCard",
+    "description": "Protect one player each night from werewolf attacks.",
+    "id": 8,
+    "role_name": "Guard",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Create Love Bond",
+    "card_id": 9,
+    "class": "RoleCard",
+    "description": "Choose two players to be lovers on the first night.",
+    "id": 9,
+    "role_name": "Cupid",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 10,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 10,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 11,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 11,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 12,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 12,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 13,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 13,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 14,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 14,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Voting",
+    "card_id": 15,
+    "class": "RoleCard",
+    "description": "No special abilities. Vote to eliminate suspected werewolves during the day.",
+    "id": 15,
+    "role_name": "Villager",
+    "team": "Villager",
+    "win_condition": "Eliminate all werewolves"
+  },
+  {
+    "ability": "Deception",
+    "card_id": 16,
+    "class": "RoleCard",
+    "description": "Win by getting eliminated during the day phase.",
+    "id": 16,
+    "role_name": "Fool",
+    "team": "Third Party",
+    "win_condition": "Get voted out during day phase"
+  },
+  {
+    "ability": "Game Ender",
+    "card_id": 17,
+    "class": "RoleCard",
+    "description": "Win by getting eliminated. Game ends if Tanner dies.",
+    "id": 17,
+    "role_name": "Tanner",
+    "team": "Third Party",
+    "win_condition": "Get eliminated by any means"
+  }
+]

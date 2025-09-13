@@ -1,0 +1,91 @@
+// Generate Werewolf (Mafia) role cards script
+// Contains various roles for the Werewolf game
+
+// Generate Werewolf team cards
+for(werewolf_id, 4) {  // 4 werewolves
+    obj("RoleCard", werewolf_id) {
+        str(role_name) { "Werewolf"; }
+        str(team) { "Werewolf"; }
+        str(description) { "Kill one villager each night. Win when werewolves equal or outnumber villagers."; }
+        str(ability) { "Night Kill"; }
+        str(win_condition) { "Eliminate all villagers"; }
+        int(card_id) { werewolf_id; }
+    }
+}
+
+// Generate special villager roles
+obj("RoleCard", 5) {
+    str(role_name) { "Seer"; }
+    str(team) { "Villager"; }
+    str(description) { "Check one player's identity each night."; }
+    str(ability) { "Night Vision"; }
+    str(win_condition) { "Eliminate all werewolves"; }
+    int(card_id) { 5; }
+}
+
+obj("RoleCard", 6) {
+    str(role_name) { "Witch"; }
+    str(team) { "Villager"; }
+    str(description) { "Has one healing potion and one poison potion."; }
+    str(ability) { "Heal or Poison"; }
+    str(win_condition) { "Eliminate all werewolves"; }
+    int(card_id) { 6; }
+}
+
+obj("RoleCard", 7) {
+    str(role_name) { "Hunter"; }
+    str(team) { "Villager"; }
+    str(description) { "Can shoot one player when eliminated."; }
+    str(ability) { "Revenge Shot"; }
+    str(win_condition) { "Eliminate all werewolves"; }
+    int(card_id) { 7; }
+}
+
+obj("RoleCard", 8) {
+    str(role_name) { "Guard"; }
+    str(team) { "Villager"; }
+    str(description) { "Protect one player each night from werewolf attacks."; }
+    str(ability) { "Night Protection"; }
+    str(win_condition) { "Eliminate all werewolves"; }
+    int(card_id) { 8; }
+}
+
+obj("RoleCard", 9) {
+    str(role_name) { "Cupid"; }
+    str(team) { "Villager"; }
+    str(description) { "Choose two players to be lovers on the first night."; }
+    str(ability) { "Create Love Bond"; }
+    str(win_condition) { "Eliminate all werewolves"; }
+    int(card_id) { 9; }
+}
+
+// Generate regular villager cards
+for(villager_id, 6) {  // 6 regular villagers
+    obj("RoleCard", 9 + villager_id) {
+        str(role_name) { "Villager"; }
+        str(team) { "Villager"; }
+        str(description) { "No special abilities. Vote to eliminate suspected werewolves during the day."; }
+        str(ability) { "Voting"; }
+        str(win_condition) { "Eliminate all werewolves"; }
+        int(card_id) { 9 + villager_id; }
+    }
+}
+
+// Generate third party roles
+obj("RoleCard", 16) {
+    str(role_name) { "Fool"; }
+    str(team) { "Third Party"; }
+    str(description) { "Win by getting eliminated during the day phase."; }
+    str(ability) { "Deception"; }
+    str(win_condition) { "Get voted out during day phase"; }
+    int(card_id) { 16; }
+}
+
+obj("RoleCard", 17) {
+    str(role_name) { "Tanner"; }
+    str(team) { "Third Party"; }
+    str(description) { "Win by getting eliminated. Game ends if Tanner dies."; }
+    str(ability) { "Game Ender"; }
+    str(win_condition) { "Get eliminated by any means"; }
+    int(card_id) { 17; }
+}

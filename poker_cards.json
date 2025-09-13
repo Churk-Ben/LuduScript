@@ -1,0 +1,470 @@
+[
+  {
+    "card_id": 1,
+    "class": "Card",
+    "color": "Red",
+    "id": 1,
+    "rank_name": "A",
+    "suit_name": "Hearts",
+    "value": 1
+  },
+  {
+    "card_id": 2,
+    "class": "Card",
+    "color": "Red",
+    "id": 2,
+    "rank_name": "2",
+    "suit_name": "Hearts",
+    "value": 2
+  },
+  {
+    "card_id": 3,
+    "class": "Card",
+    "color": "Red",
+    "id": 3,
+    "rank_name": "3",
+    "suit_name": "Hearts",
+    "value": 3
+  },
+  {
+    "card_id": 4,
+    "class": "Card",
+    "color": "Red",
+    "id": 4,
+    "rank_name": "4",
+    "suit_name": "Hearts",
+    "value": 4
+  },
+  {
+    "card_id": 5,
+    "class": "Card",
+    "color": "Red",
+    "id": 5,
+    "rank_name": "5",
+    "suit_name": "Hearts",
+    "value": 5
+  },
+  {
+    "card_id": 6,
+    "class": "Card",
+    "color": "Red",
+    "id": 6,
+    "rank_name": "6",
+    "suit_name": "Hearts",
+    "value": 6
+  },
+  {
+    "card_id": 7,
+    "class": "Card",
+    "color": "Red",
+    "id": 7,
+    "rank_name": "7",
+    "suit_name": "Hearts",
+    "value": 7
+  },
+  {
+    "card_id": 8,
+    "class": "Card",
+    "color": "Red",
+    "id": 8,
+    "rank_name": "8",
+    "suit_name": "Hearts",
+    "value": 8
+  },
+  {
+    "card_id": 9,
+    "class": "Card",
+    "color": "Red",
+    "id": 9,
+    "rank_name": "9",
+    "suit_name": "Hearts",
+    "value": 9
+  },
+  {
+    "card_id": 10,
+    "class": "Card",
+    "color": "Red",
+    "id": 10,
+    "rank_name": "10",
+    "suit_name": "Hearts",
+    "value": 10
+  },
+  {
+    "card_id": 11,
+    "class": "Card",
+    "color": "Red",
+    "id": 11,
+    "rank_name": "J",
+    "suit_name": "Hearts",
+    "value": 11
+  },
+  {
+    "card_id": 12,
+    "class": "Card",
+    "color": "Red",
+    "id": 12,
+    "rank_name": "Q",
+    "suit_name": "Hearts",
+    "value": 12
+  },
+  {
+    "card_id": 13,
+    "class": "Card",
+    "color": "Red",
+    "id": 13,
+    "rank_name": "K",
+    "suit_name": "Hearts",
+    "value": 13
+  },
+  {
+    "card_id": 14,
+    "class": "Card",
+    "color": "Black",
+    "id": 14,
+    "rank_name": "A",
+    "suit_name": "Spades",
+    "value": 1
+  },
+  {
+    "card_id": 15,
+    "class": "Card",
+    "color": "Black",
+    "id": 15,
+    "rank_name": "2",
+    "suit_name": "Spades",
+    "value": 2
+  },
+  {
+    "card_id": 16,
+    "class": "Card",
+    "color": "Black",
+    "id": 16,
+    "rank_name": "3",
+    "suit_name": "Spades",
+    "value": 3
+  },
+  {
+    "card_id": 17,
+    "class": "Card",
+    "color": "Black",
+    "id": 17,
+    "rank_name": "4",
+    "suit_name": "Spades",
+    "value": 4
+  },
+  {
+    "card_id": 18,
+    "class": "Card",
+    "color": "Black",
+    "id": 18,
+    "rank_name": "5",
+    "suit_name": "Spades",
+    "value": 5
+  },
+  {
+    "card_id": 19,
+    "class": "Card",
+    "color": "Black",
+    "id": 19,
+    "rank_name": "6",
+    "suit_name": "Spades",
+    "value": 6
+  },
+  {
+    "card_id": 20,
+    "class": "Card",
+    "color": "Black",
+    "id": 20,
+    "rank_name": "7",
+    "suit_name": "Spades",
+    "value": 7
+  },
+  {
+    "card_id": 21,
+    "class": "Card",
+    "color": "Black",
+    "id": 21,
+    "rank_name": "8",
+    "suit_name": "Spades",
+    "value": 8
+  },
+  {
+    "card_id": 22,
+    "class": "Card",
+    "color": "Black",
+    "id": 22,
+    "rank_name": "9",
+    "suit_name": "Spades",
+    "value": 9
+  },
+  {
+    "card_id": 23,
+    "class": "Card",
+    "color": "Black",
+    "id": 23,
+    "rank_name": "10",
+    "suit_name": "Spades",
+    "value": 10
+  },
+  {
+    "card_id": 24,
+    "class": "Card",
+    "color": "Black",
+    "id": 24,
+    "rank_name": "J",
+    "suit_name": "Spades",
+    "value": 11
+  },
+  {
+    "card_id": 25,
+    "class": "Card",
+    "color": "Black",
+    "id": 25,
+    "rank_name": "Q",
+    "suit_name": "Spades",
+    "value": 12
+  },
+  {
+    "card_id": 26,
+    "class": "Card",
+    "color": "Black",
+    "id": 26,
+    "rank_name": "K",
+    "suit_name": "Spades",
+    "value": 13
+  },
+  {
+    "card_id": 27,
+    "class": "Card",
+    "color": "Black",
+    "id": 27,
+    "rank_name": "A",
+    "suit_name": "Clubs",
+    "value": 1
+  },
+  {
+    "card_id": 28,
+    "class": "Card",
+    "color": "Black",
+    "id": 28,
+    "rank_name": "2",
+    "suit_name": "Clubs",
+    "value": 2
+  },
+  {
+    "card_id": 29,
+    "class": "Card",
+    "color": "Black",
+    "id": 29,
+    "rank_name": "3",
+    "suit_name": "Clubs",
+    "value": 3
+  },
+  {
+    "card_id": 30,
+    "class": "Card",
+    "color": "Black",
+    "id": 30,
+    "rank_name": "4",
+    "suit_name": "Clubs",
+    "value": 4
+  },
+  {
+    "card_id": 31,
+    "class": "Card",
+    "color": "Black",
+    "id": 31,
+    "rank_name": "5",
+    "suit_name": "Clubs",
+    "value": 5
+  },
+  {
+    "card_id": 32,
+    "class": "Card",
+    "color": "Black",
+    "id": 32,
+    "rank_name": "6",
+    "suit_name": "Clubs",
+    "value": 6
+  },
+  {
+    "card_id": 33,
+    "class": "Card",
+    "color": "Black",
+    "id": 33,
+    "rank_name": "7",
+    "suit_name": "Clubs",
+    "value": 7
+  },
+  {
+    "card_id": 34,
+    "class": "Card",
+    "color": "Black",
+    "id": 34,
+    "rank_name": "8",
+    "suit_name": "Clubs",
+    "value": 8
+  },
+  {
+    "card_id": 35,
+    "class": "Card",
+    "color": "Black",
+    "id": 35,
+    "rank_name": "9",
+    "suit_name": "Clubs",
+    "value": 9
+  },
+  {
+    "card_id": 36,
+    "class": "Card",
+    "color": "Black",
+    "id": 36,
+    "rank_name": "10",
+    "suit_name": "Clubs",
+    "value": 10
+  },
+  {
+    "card_id": 37,
+    "class": "Card",
+    "color": "Black",
+    "id": 37,
+    "rank_name": "J",
+    "suit_name": "Clubs",
+    "value": 11
+  },
+  {
+    "card_id": 38,
+    "class": "Card",
+    "color": "Black",
+    "id": 38,
+    "rank_name": "Q",
+    "suit_name": "Clubs",
+    "value": 12
+  },
+  {
+    "card_id": 39,
+    "class": "Card",
+    "color": "Black",
+    "id": 39,
+    "rank_name": "K",
+    "suit_name": "Clubs",
+    "value": 13
+  },
+  {
+    "card_id": 40,
+    "class": "Card",
+    "color": "Red",
+    "id": 40,
+    "rank_name": "A",
+    "suit_name": "Diamonds",
+    "value": 1
+  },
+  {
+    "card_id": 41,
+    "class": "Card",
+    "color": "Red",
+    "id": 41,
+    "rank_name": "2",
+    "suit_name": "Diamonds",
+    "value": 2
+  },
+  {
+    "card_id": 42,
+    "class": "Card",
+    "color": "Red",
+    "id": 42,
+    "rank_name": "3",
+    "suit_name": "Diamonds",
+    "value": 3
+  },
+  {
+    "card_id": 43,
+    "class": "Card",
+    "color": "Red",
+    "id": 43,
+    "rank_name": "4",
+    "suit_name": "Diamonds",
+    "value": 4
+  },
+  {
+    "card_id": 44,
+    "class": "Card",
+    "color": "Red",
+    "id": 44,
+    "rank_name": "5",
+    "suit_name": "Diamonds",
+    "value": 5
+  },
+  {
+    "card_id": 45,
+    "class": "Card",
+    "color": "Red",
+    "id": 45,
+    "rank_name": "6",
+    "suit_name": "Diamonds",
+    "value": 6
+  },
+  {
+    "card_id": 46,
+    "class": "Card",
+    "color": "Red",
+    "id": 46,
+    "rank_name": "7",
+    "suit_name": "Diamonds",
+    "value": 7
+  },
+  {
+    "card_id": 47,
+    "class": "Card",
+    "color": "Red",
+    "id": 47,
+    "rank_name": "8",
+    "suit_name": "Diamonds",
+    "value": 8
+  },
+  {
+    "card_id": 48,
+    "class": "Card",
+    "color": "Red",
+    "id": 48,
+    "rank_name": "9",
+    "suit_name": "Diamonds",
+    "value": 9
+  },
+  {
+    "card_id": 49,
+    "class": "Card",
+    "color": "Red",
+    "id": 49,
+    "rank_name": "10",
+    "suit_name": "Diamonds",
+    "value": 10
+  },
+  {
+    "card_id": 50,
+    "class": "Card",
+    "color": "Red",
+    "id": 50,
+    "rank_name": "J",
+    "suit_name": "Diamonds",
+    "value": 11
+  },
+  {
+    "card_id": 51,
+    "class": "Card",
+    "color": "Red",
+    "id": 51,
+    "rank_name": "Q",
+    "suit_name": "Diamonds",
+    "value": 12
+  },
+  {
+    "card_id": 52,
+    "class": "Card",
+    "color": "Red",
+    "id": 52,
+    "rank_name": "K",
+    "suit_name": "Diamonds",
+    "value": 13
+  }
+]

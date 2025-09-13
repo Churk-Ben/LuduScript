@@ -572,7 +572,9 @@ public:
         expect(TokenKind::RPAREN, "expected ')' after obj args");
         expect(TokenKind::LBRACE, "expected '{' after obj");
         std::vector<StmtPtr> body = parseBlock();
-        return std::make_unique<ObjStmt>(classname, std::move(idexpr), ln);
+        auto objStmt = std::make_unique<ObjStmt>(classname, std::move(idexpr), ln);
+        objStmt->body = std::move(body);
+        return objStmt;
     }
 
     StmtPtr parseDecl()
@@ -1215,10 +1217,6 @@ void execStmt(Stmt *s, Env &env)
         env.pushScope();
         for (auto &st : os->body)
         {
-            // handle assignment shorthand: if statement is ExprStmt and expression is IdentExpr inside a Decl block, that is handled earlier in parse
-            // Execute statements
-            // Special case: allow assignment using syntax "name = expr;" recognized as ExprStmt? Our parser produces ExprStmt for bare expr; assignment parsed as ExprStmt if not detected earlier.
-            // So we need to detect assignment expressions in ExprStmt where expression is BinaryExpr with '='? But parser doesn't build BinaryExpr for '='.
             execStmt(st.get(), env);
         }
         env.popScope();
@@ -1247,7 +1245,7 @@ void execStmt(Stmt *s, Env &env)
 // Approach: keep last token in a small buffer; when we call lex.nextToken() above in parseStmt, we've advanced lex state; but our Parser holds lex as a member with no API to rewind.
 // To make it simple and reliable, we will rebuild Parser to support single-token lookahead by using a lookahead buffer: the parser will maintain cur and next tokens (two-token lookahead). We will refactor a bit.
 
-int main_inner(const std::string &source, bool printPretty)
+int main_inner(const std::string &source, bool printPretty, const std::string &outputFile = "")
 {
     try
     {
@@ -1268,11 +1266,30 @@ int main_inner(const std::string &source, bool printPretty)
         {
             execStmt(st.get(), env);
         }
-        // output
+
+        // Generate output string
+        std::string jsonOutput;
         if (printPretty)
-            std::cout << env.output.dump(2) << std::endl;
+            jsonOutput = env.output.dump(2);
         else
-            std::cout << env.output.dump() << std::endl;
+            jsonOutput = env.output.dump();
+
+        // Output to file or console
+        if (!outputFile.empty())
+        {
+            std::ofstream ofs(outputFile);
+            if (!ofs)
+            {
+                std::cerr << "Cannot write to " << outputFile << std::endl;
+                return 3;
+            }
+            ofs << jsonOutput << std::endl;
+            std::cout << "Output saved to " << outputFile << std::endl;
+        }
+        else
+        {
+            std::cout << jsonOutput << std::endl;
+        }
         return 0;
     }
     catch (const std::exception &ex)
@@ -1286,13 +1303,33 @@ int main(int argc, char **argv)
 {
     if (argc < 2)
     {
-        std::cerr << "Usage: " << argv[0] << " <script.file> [--pretty]\n";
+        std::cerr << "Usage: " << argv[0] << " <script.file> [--pretty] [--output <file.json>]\n";
         return 1;
     }
+
     bool pretty = false;
+    std::string outputFile = "";
     std::string path = argv[1];
-    if (argc >= 3 && std::string(argv[2]) == "--pretty")
-        pretty = true;
+
+    // Parse command line arguments
+    for (int i = 2; i < argc; i++)
+    {
+        std::string arg = argv[i];
+        if (arg == "--pretty")
+        {
+            pretty = true;
+        }
+        else if (arg == "--output" && i + 1 < argc)
+        {
+            outputFile = argv[i + 1];
+            i++; // Skip next argument as it's the filename
+        }
+        else if (arg.substr(0, 9) == "--output=")
+        {
+            outputFile = arg.substr(9); // Extract filename after "--output="
+        }
+    }
+
     std::ifstream ifs(path);
     if (!ifs)
     {
@@ -1302,5 +1339,5 @@ int main(int argc, char **argv)
     std::stringstream ss;
     ss << ifs.rdbuf();
     std::string src = ss.str();
-    return main_inner(src, pretty);
+    return main_inner(src, pretty, outputFile);
 }

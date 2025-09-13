@@ -9,27 +9,35 @@
 
 using json = nlohmann::json;
 
+// Loop control exceptions
+struct BreakException : std::exception {};
+struct ContinueException : std::exception {};
+
 // Value type for runtime values
 struct Value
 {
     enum class Type
     {
-        INT,
+        NUM,
         STR,
         BOOL
     } type;
     
-    ll ival;
+    double nval;  // Numeric value (can represent both int and float)
+    bool isInteger; // Flag to indicate if the number should be treated as integer
     std::string sval;
     bool bval;
     
     static Value makeInt(ll i);
+    static Value makeNum(double n);
     static Value makeStr(std::string s);
     static Value makeBool(bool b);
     
     std::string toStr() const;
+    double toNum() const;
     ll toInt() const;
     bool toBool() const;
+    bool isInt() const; // Check if this numeric value should be treated as integer
 };
 
 // Runtime environment

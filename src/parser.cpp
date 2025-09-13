@@ -63,8 +63,22 @@ StmtPtr Parser::parseStmt()
         return parseFor();
     if (cur.kind == TokenKind::KW_OBJ)
         return parseObj();
-    if (cur.kind == TokenKind::KW_INT || cur.kind == TokenKind::KW_STR || cur.kind == TokenKind::KW_BOOL)
+    if (cur.kind == TokenKind::KW_NUM || cur.kind == TokenKind::KW_STR || cur.kind == TokenKind::KW_BOOL)
         return parseDecl();
+    if (cur.kind == TokenKind::KW_BREAK)
+    {
+        int line = cur.line;
+        consume();
+        match(TokenKind::SEMI); // Optional semicolon
+        return std::make_unique<BreakStmt>(line);
+    }
+    if (cur.kind == TokenKind::KW_CONTINUE)
+    {
+        int line = cur.line;
+        consume();
+        match(TokenKind::SEMI); // Optional semicolon
+        return std::make_unique<ContinueStmt>(line);
+    }
     
     // Expression statement
     auto expr = parseExpr();

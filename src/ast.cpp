@@ -2,6 +2,7 @@
 
 // LiteralExpr constructors
 LiteralExpr::LiteralExpr(ll v, int l) : Expr(l), kind(Kind::NUMBER), ival(v) {}
+LiteralExpr::LiteralExpr(double d, int l) : Expr(l), kind(Kind::FLOAT), dval(d) {}
 LiteralExpr::LiteralExpr(std::string s, int l) : Expr(l), kind(Kind::STRING), sval(std::move(s)) {}
 LiteralExpr::LiteralExpr(bool b, int l) : Expr(l), kind(Kind::BOOL), bval(b) {}
 
@@ -40,3 +41,7 @@ ForStmt::ForStmt(std::string it, int l) : Stmt(l), iter(std::move(it)) {}
 
 // ObjStmt constructor
 ObjStmt::ObjStmt(std::string c, ExprPtr id, int l) : Stmt(l), className(std::move(c)), idExpr(std::move(id)) {}
+
+BreakStmt::BreakStmt(int l) : Stmt(l) {}
+
+ContinueStmt::ContinueStmt(int l) : Stmt(l) {}

@@ -185,12 +185,16 @@ Token Lexer::nextToken()
             return Token(TokenKind::KW_FOR, s, line);
         if (s == "obj")
             return Token(TokenKind::KW_OBJ, s, line);
-        if (s == "int")
-            return Token(TokenKind::KW_INT, s, line);
+        if (s == "num")
+            return Token(TokenKind::KW_NUM, s, line);
         if (s == "str")
             return Token(TokenKind::KW_STR, s, line);
         if (s == "bool")
             return Token(TokenKind::KW_BOOL, s, line);
+        if (s == "break")
+            return Token(TokenKind::KW_BREAK, s, line);
+        if (s == "continue")
+            return Token(TokenKind::KW_CONTINUE, s, line);
         if (s == "true" || s == "false")
             return Token(TokenKind::IDENT, s, line); // Handle as ident for simplicity
         
@@ -203,6 +207,27 @@ Token Lexer::nextToken()
         std::string s;
         while (std::isdigit(peek()))
             s.push_back(get());
+        
+        // Check for decimal point
+        if (peek() == '.')
+        {
+            s.push_back(get()); // consume '.'
+            // Must have at least one digit after decimal point
+            if (!std::isdigit(peek()))
+            {
+                // Put back the dot and return integer
+                i--; // put back the '.'
+                s.pop_back(); // remove '.' from string
+                return Token(TokenKind::NUMBER, s, line);
+            }
+            while (std::isdigit(peek()))
+                s.push_back(get());
+            
+            // Return FLOAT token for numbers with decimal point
+            return Token(TokenKind::FLOAT, s, line);
+        }
+        
+        // Return NUMBER token for integers
         return Token(TokenKind::NUMBER, s, line);
     }
     

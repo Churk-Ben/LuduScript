@@ -23,7 +23,14 @@ void Interpreter::execStmt(Stmt *s)
         // If inside object, write to object field, else to var
         if (env.current_object.has_value())
         {
-            env.current_object->operator[](as->name) = (v.type == Value::Type::INT ? json(v.ival) : (v.type == Value::Type::BOOL ? json(v.bval) : json(v.sval)));
+            if (v.type == Value::Type::NUM && v.isInteger)
+                env.current_object->operator[](as->name) = json(static_cast<ll>(v.nval));
+            else if (v.type == Value::Type::NUM)
+                env.current_object->operator[](as->name) = json(v.nval);
+            else if (v.type == Value::Type::BOOL)
+                env.current_object->operator[](as->name) = json(v.bval);
+            else
+                env.current_object->operator[](as->name) = json(v.sval);
             env.declared_fields.insert(as->name);
         }
         else
@@ -43,8 +50,8 @@ void Interpreter::execStmt(Stmt *s)
         else
         {
             // Default values
-            if (ds->type == "int")
-                v = Value::makeInt(0);
+            if (ds->type == "num")
+                v = Value::makeNum(0.0);
             else if (ds->type == "str")
                 v = Value::makeStr("");
             else if (ds->type == "bool")
@@ -54,7 +61,14 @@ void Interpreter::execStmt(Stmt *s)
         // If inside object, write to object field, else to var
         if (env.current_object.has_value())
         {
-            env.current_object->operator[](ds->name) = (v.type == Value::Type::INT ? json(v.ival) : (v.type == Value::Type::BOOL ? json(v.bval) : json(v.sval)));
+            if (v.type == Value::Type::NUM && v.isInteger)
+                env.current_object->operator[](ds->name) = json(static_cast<ll>(v.nval));
+            else if (v.type == Value::Type::NUM)
+                env.current_object->operator[](ds->name) = json(v.nval);
+            else if (v.type == Value::Type::BOOL)
+                env.current_object->operator[](ds->name) = json(v.bval);
+            else
+                env.current_object->operator[](ds->name) = json(v.sval);
             env.declared_fields.insert(ds->name);
         }
         else
@@ -132,6 +146,14 @@ void Interpreter::execStmt(Stmt *s)
                 {
                     execBlock(fs->body);
                 }
+                catch (const BreakException&)
+                {
+                    break;
+                }
+                catch (const ContinueException&)
+                {
+                    continue;
+                }
                 catch (...)
                 {
                     env.popScope();
@@ -147,6 +169,14 @@ void Interpreter::execStmt(Stmt *s)
                 try
                 {
                     execBlock(fs->body);
+                }
+                catch (const BreakException&)
+                {
+                    break;
+                }
+                catch (const ContinueException&)
+                {
+                    continue;
                 }
                 catch (...)
                 {
@@ -167,11 +197,22 @@ void Interpreter::execStmt(Stmt *s)
         env.current_object->operator[]("class") = os->className;
         
         Value idv = evalExpr(os->idExpr.get());
-        // ID as int if int else string
-        if (idv.type == Value::Type::INT)
-            env.current_object->operator[]("id") = idv.ival;
+        // ID as int if int, num if num, else string
+        if (idv.type == Value::Type::NUM)
+        {
+            if (idv.isInteger)
+            {
+                env.current_object->operator[]("id") = static_cast<ll>(idv.nval);
+            }
+            else
+            {
+                env.current_object->operator[]("id") = idv.nval;
+            }
+        }
         else
+        {
             env.current_object->operator[]("id") = idv.toStr();
+        }
         
         // Execute body with object context; use new scope for body variables
         env.pushScope();
@@ -186,6 +227,16 @@ void Interpreter::execStmt(Stmt *s)
         env.current_object.reset();
         env.declared_fields.clear();
         return;
+    }
+    
+    if (auto bs = dynamic_cast<BreakStmt *>(s))
+    {
+        throw BreakException();
+    }
+    
+    if (auto cs = dynamic_cast<ContinueStmt *>(s))
+    {
+        throw ContinueException();
     }
     
     throw std::runtime_error("Unknown statement node");

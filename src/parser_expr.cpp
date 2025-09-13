@@ -120,10 +120,19 @@ ExprPtr Parser::parsePrimary()
 {
     int line = cur.line;
     
-    // Numbers
+    // Numbers (integers)
     if (cur.kind == TokenKind::NUMBER)
     {
         ll value = std::stoll(cur.text);
+        consume();
+        auto expr = std::make_unique<LiteralExpr>(value, line);
+        return parseCall(std::move(expr));
+    }
+    
+    // Floating point numbers
+    if (cur.kind == TokenKind::FLOAT)
+    {
+        double value = std::stod(cur.text);
         consume();
         auto expr = std::make_unique<LiteralExpr>(value, line);
         return parseCall(std::move(expr));

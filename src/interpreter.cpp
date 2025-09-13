@@ -5,10 +5,20 @@
 // Value implementation
 Value Value::makeInt(ll i)
 {
-    Value x;
-    x.type = Type::INT;
-    x.ival = i;
-    return x;
+    Value v;
+    v.type = Type::NUM;
+    v.nval = static_cast<double>(i);
+    v.isInteger = true;
+    return v;
+}
+
+Value Value::makeNum(double n)
+{
+    Value v;
+    v.type = Type::NUM;
+    v.nval = n;
+    v.isInteger = false;
+    return v;
 }
 
 Value Value::makeStr(std::string s)
@@ -31,17 +41,42 @@ std::string Value::toStr() const
 {
     if (type == Type::STR)
         return sval;
-    if (type == Type::INT)
-        return std::to_string(ival);
+    if (type == Type::NUM)
+    {
+        if (isInteger)
+            return std::to_string(static_cast<ll>(nval));
+        else
+            return std::to_string(nval);
+    }
     if (type == Type::BOOL)
         return bval ? "true" : "false";
     return "";
 }
 
+double Value::toNum() const
+{
+    if (type == Type::NUM)
+        return nval;
+    if (type == Type::STR)
+    {
+        try
+        {
+            return std::stod(sval);
+        }
+        catch (...)
+        {
+            return 0.0;
+        }
+    }
+    if (type == Type::BOOL)
+        return bval ? 1.0 : 0.0;
+    return 0.0;
+}
+
 ll Value::toInt() const
 {
-    if (type == Type::INT)
-        return ival;
+    if (type == Type::NUM)
+        return static_cast<ll>(nval);
     if (type == Type::STR)
     {
         try
@@ -62,11 +97,16 @@ bool Value::toBool() const
 {
     if (type == Type::BOOL)
         return bval;
-    if (type == Type::INT)
-        return ival != 0;
+    if (type == Type::NUM)
+        return nval != 0.0;
     if (type == Type::STR)
         return !sval.empty();
     return false;
+}
+
+bool Value::isInt() const
+{
+    return type == Type::NUM && isInteger;
 }
 
 // Env implementation
@@ -137,6 +177,8 @@ Value Interpreter::evalLiteral(LiteralExpr *lit)
 {
     if (lit->kind == LiteralExpr::Kind::NUMBER)
         return Value::makeInt(lit->ival);
+    if (lit->kind == LiteralExpr::Kind::FLOAT)
+        return Value::makeNum(lit->dval);
     if (lit->kind == LiteralExpr::Kind::STRING)
         return Value::makeStr(lit->sval);
     return Value::makeBool(lit->bval);
@@ -144,15 +186,16 @@ Value Interpreter::evalLiteral(LiteralExpr *lit)
 
 Value Interpreter::evalIdent(IdentExpr *id)
 {
-    // Check if it's an undeclared field in object context
+    // First try to get variable from environment
+    auto val = env.getVar(id->name);
+    if (val.has_value())
+        return *val;
+    
+    // If in object context and variable not found, treat as field name
     if (env.current_object.has_value() && env.declared_fields.find(id->name) == env.declared_fields.end())
     {
         return Value::makeStr(id->name);
     }
-    
-    auto val = env.getVar(id->name);
-    if (val.has_value())
-        return *val;
     
     throw std::runtime_error("Undefined variable: " + id->name);
 }
@@ -163,7 +206,7 @@ Value Interpreter::evalUnary(UnaryExpr *u)
     if (u->op == "!")
         return Value::makeBool(!r.toBool());
     if (u->op == "-")
-        return Value::makeInt(-r.toInt());
+        return Value::makeNum(-r.toNum());
     throw std::runtime_error("Unknown unary operator: " + u->op);
 }
 
@@ -178,32 +221,55 @@ Value Interpreter::evalBinary(BinaryExpr *b)
         // If either is string, do string concat
         if (L.type == Value::Type::STR || R.type == Value::Type::STR)
             return Value::makeStr(L.toStr() + R.toStr());
-        return Value::makeInt(L.toInt() + R.toInt());
+        // If both are integers, return integer
+        if (L.type == Value::Type::NUM && R.type == Value::Type::NUM && L.isInteger && R.isInteger)
+        {
+            return Value::makeInt(static_cast<ll>(L.nval) + static_cast<ll>(R.nval));
+        }
+        // Otherwise return float
+        return Value::makeNum(L.toNum() + R.toNum());
     }
     if (op == "-")
-        return Value::makeInt(L.toInt() - R.toInt());
+    {
+        // If both are integers, return integer
+        if (L.type == Value::Type::NUM && R.type == Value::Type::NUM && L.isInteger && R.isInteger)
+        {
+            return Value::makeInt(static_cast<ll>(L.nval) - static_cast<ll>(R.nval));
+        }
+        // Otherwise return float
+        return Value::makeNum(L.toNum() - R.toNum());
+    }
     if (op == "*")
-        return Value::makeInt(L.toInt() * R.toInt());
+    {
+        // If both are integers, return integer
+        if (L.type == Value::Type::NUM && R.type == Value::Type::NUM && L.isInteger && R.isInteger)
+        {
+            return Value::makeInt(static_cast<ll>(L.nval) * static_cast<ll>(R.nval));
+        }
+        // Otherwise return float
+        return Value::makeNum(L.toNum() * R.toNum());
+    }
     if (op == "/")
     {
-        ll r = R.toInt();
-        if (r == 0)
+        // Division always returns float to handle fractional results
+        double r = R.toNum();
+        if (r == 0.0)
             throw std::runtime_error("Division by zero");
-        return Value::makeInt(L.toInt() / r);
+        return Value::makeNum(L.toNum() / r);
     }
     if (op == "%")
     {
         ll r = R.toInt();
         if (r == 0)
             throw std::runtime_error("Modulo by zero");
-        return Value::makeInt(L.toInt() % r);
+        return Value::makeNum(static_cast<double>(L.toInt() % r));
     }
     if (op == "==")
     {
         if (L.type == R.type)
         {
-            if (L.type == Value::Type::INT)
-                return Value::makeBool(L.ival == R.ival);
+            if (L.type == Value::Type::NUM)
+                return Value::makeBool(L.nval == R.nval);
             if (L.type == Value::Type::STR)
                 return Value::makeBool(L.sval == R.sval);
             if (L.type == Value::Type::BOOL)
@@ -215,8 +281,8 @@ Value Interpreter::evalBinary(BinaryExpr *b)
     {
         if (L.type == R.type)
         {
-            if (L.type == Value::Type::INT)
-                return Value::makeBool(L.ival != R.ival);
+            if (L.type == Value::Type::NUM)
+                return Value::makeBool(L.nval != R.nval);
             if (L.type == Value::Type::STR)
                 return Value::makeBool(L.sval != R.sval);
             if (L.type == Value::Type::BOOL)
@@ -225,13 +291,13 @@ Value Interpreter::evalBinary(BinaryExpr *b)
         return Value::makeBool(true);
     }
     if (op == "<")
-        return Value::makeBool(L.toInt() < R.toInt());
+        return Value::makeBool(L.toNum() < R.toNum());
     if (op == ">")
-        return Value::makeBool(L.toInt() > R.toInt());
+        return Value::makeBool(L.toNum() > R.toNum());
     if (op == "<=")
-        return Value::makeBool(L.toInt() <= R.toInt());
+        return Value::makeBool(L.toNum() <= R.toNum());
     if (op == ">=")
-        return Value::makeBool(L.toInt() >= R.toInt());
+        return Value::makeBool(L.toNum() >= R.toNum());
     if (op == "&&")
         return Value::makeBool(L.toBool() && R.toBool());
     if (op == "||")

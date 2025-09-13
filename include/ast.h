@@ -35,14 +35,17 @@ struct LiteralExpr : Expr
     enum class Kind
     {
         NUMBER,
+        FLOAT,
         STRING,
         BOOL
     } kind;
     std::string sval;
     ll ival;
+    double dval;
     bool bval;
     
     LiteralExpr(ll v, int l);
+    LiteralExpr(double d, int l);
     LiteralExpr(std::string s, int l);
     LiteralExpr(bool b, int l);
 };
@@ -143,4 +146,16 @@ struct ObjStmt : Stmt
     ExprPtr idExpr;
     std::vector<StmtPtr> body;
     ObjStmt(std::string c, ExprPtr id, int l);
+};
+
+// Break statement
+struct BreakStmt : Stmt
+{
+    BreakStmt(int l);
+};
+
+// Continue statement
+struct ContinueStmt : Stmt
+{
+    ContinueStmt(int l);
 };

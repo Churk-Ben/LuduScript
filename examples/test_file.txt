@@ -1,0 +1,4 @@
+// 这是一个文本格式的LuduScript示例
+// 演示如何在单行中创建简单对象
+
+let quickCard = {"name": "快速卡牌", "type": "测试", "power": 1}; output(quickCard);

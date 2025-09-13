@@ -1,0 +1,30 @@
+// 简单的卡牌创建示例
+// 演示基本的对象创建和属性设置
+
+// 创建一张简单的测试卡牌
+obj("TestCard", 1) {
+    str(name) { "测试卡牌" }
+    int(power) { 5 }
+    int(cost) { 3 }
+    str(type) { "生物" }
+    str(description) { "这是一张用于测试的简单卡牌" }
+}
+
+// 创建另一张卡牌用于对比
+obj("TestCard", 2) {
+    str(name) { "火焰法师" }
+    int(power) { 4 }
+    int(cost) { 2 }
+    str(type) { "法术" }
+    str(description) { "造成4点火焰伤害" }
+}
+
+// 创建第三张卡牌
+obj("TestCard", 3) {
+    str(name) { "治疗术" }
+    int(power) { 0 }
+    int(cost) { 1 }
+    str(type) { "法术" }
+    str(description) { "恢复3点生命值" }
+    int(heal_amount) { 3 }
+}

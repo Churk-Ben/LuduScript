@@ -1,0 +1,11 @@
+F:/Code Projects/LuduScript/build/CMakeFiles/luduscript.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/clean-output.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/package.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/package_source.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/test.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/edit_cache.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/rebuild_cache.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/list_install_components.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/install.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/install/local.dir
+F:/Code Projects/LuduScript/build/CMakeFiles/install/strip.dir

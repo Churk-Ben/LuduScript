@@ -1,0 +1,67 @@
+// 测试修正后的文档示例语法
+// 基于SYNTAX.md中的扑克牌示例
+
+// 生成标准52张扑克牌
+for(suit, 4) {
+    for(rank, 13) {
+        obj("Card", (suit - 1) * 13 + rank) {
+            // 设置花色
+            if (suit == 1) { 
+                str(suit_name) { "♠" }
+                str(color) { "black" }
+            }
+            if (suit == 2) { 
+                str(suit_name) { "♥" }
+                str(color) { "red" }
+            }
+            if (suit == 3) { 
+                str(suit_name) { "♦" }
+                str(color) { "red" }
+            }
+            if (suit == 4) { 
+                str(suit_name) { "♣" }
+                str(color) { "black" }
+            }
+            
+            // 设置牌面
+            if (rank == 1) { str(rank_name) { "A" } }
+            if (rank == 2) { str(rank_name) { "2" } }
+            if (rank == 3) { str(rank_name) { "3" } }
+            if (rank == 4) { str(rank_name) { "4" } }
+            if (rank == 5) { str(rank_name) { "5" } }
+            if (rank == 6) { str(rank_name) { "6" } }
+            if (rank == 7) { str(rank_name) { "7" } }
+            if (rank == 8) { str(rank_name) { "8" } }
+            if (rank == 9) { str(rank_name) { "9" } }
+            if (rank == 10) { str(rank_name) { "10" } }
+            if (rank == 11) { str(rank_name) { "J" } }
+            if (rank == 12) { str(rank_name) { "Q" } }
+            if (rank == 13) { str(rank_name) { "K" } }
+            
+            int(suit_index) { suit }
+            int(rank_index) { rank }
+        }
+    }
+}
+
+// 添加大小王
+obj("Card", 53) {
+    str(suit_name) { "Joker" }
+    str(rank_name) { "Small" }
+    str(name) { "小王" }
+    str(color) { "black" }
+}
+
+obj("Card", 54) {
+    str(suit_name) { "Joker" }
+    str(rank_name) { "Big" }
+    str(name) { "大王" }
+    str(color) { "red" }
+}
+
+// 输出牌组信息
+obj("DeckInfo", 1) {
+    int(total_cards) { 54 }
+    str(status) { "已生成完整牌组" }
+    str(shuffle_status) { "已打乱" }
+}

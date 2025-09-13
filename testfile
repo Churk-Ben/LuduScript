@@ -1,5 +1,0 @@
-obj("NoExtensionCard", 1) {
-    str(description) {
-        "This file has no extension";
-    }
-}

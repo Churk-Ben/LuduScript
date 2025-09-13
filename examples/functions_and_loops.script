@@ -1,0 +1,101 @@
+// LuduScript 循环和条件示例
+// 演示for循环和条件语句的使用
+
+// 创建多个技能卡牌
+for(skill_id, 5) {
+    obj("Skill", skill_id) {
+        if(skill_id == 1) {
+            str(name) { "火球术" }
+            int(mana_cost) { 20 }
+            str(element) { "火" }
+            int(damage) { 35 }
+            str(type) { "攻击" }
+        }
+        if(skill_id == 2) {
+            str(name) { "治疗术" }
+            int(mana_cost) { 15 }
+            str(element) { "光" }
+            int(damage) { 0 }
+            str(type) { "辅助" }
+        }
+        if(skill_id == 3) {
+            str(name) { "闪电链" }
+            int(mana_cost) { 25 }
+            str(element) { "雷" }
+            int(damage) { 40 }
+            str(type) { "攻击" }
+        }
+        if(skill_id == 4) {
+            str(name) { "护盾术" }
+            int(mana_cost) { 10 }
+            str(element) { "无" }
+            int(damage) { 0 }
+            str(type) { "辅助" }
+        }
+        if(skill_id == 5) {
+            str(name) { "冰冻术" }
+            int(mana_cost) { 18 }
+            str(element) { "冰" }
+            int(damage) { 30 }
+            str(type) { "攻击" }
+        }
+    }
+}
+
+// 创建怪物卡牌
+for(monster_id, 4) {
+    obj("Monster", monster_id + 10) {
+        if(monster_id == 1) {
+            str(name) { "哥布林" }
+            int(level) { 3 }
+            int(health) { 50 }
+            int(attack) { 15 }
+            str(difficulty) { "简单" }
+        }
+        if(monster_id == 2) {
+            str(name) { "兽人" }
+            int(level) { 8 }
+            int(health) { 120 }
+            int(attack) { 35 }
+            str(difficulty) { "普通" }
+        }
+        if(monster_id == 3) {
+            str(name) { "巨魔" }
+            int(level) { 15 }
+            int(health) { 300 }
+            int(attack) { 60 }
+            str(difficulty) { "困难" }
+        }
+        if(monster_id == 4) {
+            str(name) { "龙" }
+            int(level) { 25 }
+            int(health) { 800 }
+            int(attack) { 150 }
+            str(difficulty) { "史诗" }
+        }
+    }
+}
+
+// 创建宝物卡牌
+for(treasure_id, 3) {
+    obj("Treasure", treasure_id + 20) {
+        if(treasure_id == 1) {
+            str(name) { "金币袋" }
+            int(value) { 100 }
+            str(rarity) { "普通" }
+            str(effect) { "获得金币" }
+        }
+        if(treasure_id == 2) {
+            str(name) { "魔法宝石" }
+            int(value) { 500 }
+            str(rarity) { "稀有" }
+            str(effect) { "恢复法力" }
+        }
+        if(treasure_id == 3) {
+            str(name) { "古老卷轴" }
+            int(value) { 1000 }
+            str(rarity) { "传说" }
+            str(effect) { "学习新技能" }
+        }
+    }
+}

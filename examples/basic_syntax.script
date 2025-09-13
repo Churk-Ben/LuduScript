@@ -1,0 +1,58 @@
+// LuduScript 基本语法示例
+// 演示对象创建、属性设置和循环操作
+
+// 创建玩家卡牌
+obj("Player", 1) {
+    str(name) { "Alice" }
+    int(level) { 10 }
+    str(class) { "战士" }
+    int(health) { 100 }
+    str(weapon) { "长剑" }
+}
+
+obj("Player", 2) {
+    str(name) { "Bob" }
+    int(level) { 15 }
+    str(class) { "法师" }
+    int(health) { 80 }
+    str(weapon) { "法杖" }
+}
+
+obj("Player", 3) {
+    str(name) { "Charlie" }
+    int(level) { 8 }
+    str(class) { "盗贼" }
+    int(health) { 90 }
+    str(weapon) { "匕首" }
+}
+
+// 创建装备物品
+obj("Equipment", 11) {
+    str(type) { "头盔" }
+    int(defense) { 5 }
+    str(rarity) { "普通" }
+}
+
+obj("Equipment", 12) {
+    str(type) { "护甲" }
+    int(defense) { 10 }
+    str(rarity) { "普通" }
+}
+
+obj("Equipment", 13) {
+    str(type) { "靴子" }
+    int(defense) { 15 }
+    str(rarity) { "稀有" }
+}
+
+obj("Equipment", 14) {
+    str(type) { "手套" }
+    int(defense) { 20 }
+    str(rarity) { "稀有" }
+}
+
+obj("Equipment", 15) {
+    str(type) { "项链" }
+    int(defense) { 25 }
+    str(rarity) { "史诗" }
+}

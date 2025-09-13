@@ -1,5 +1,0 @@
-obj("TestCard", 1) {
-    str(name) {
-        "Test";
-    }
-}

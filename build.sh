@@ -37,8 +37,8 @@ clean_build() {
 run_tests() {
     echo "运行测试..."
     if [ -f "$BIN_DIR/luduscript" ]; then
-        "$BIN_DIR/luduscript" scripts/generate_poker_deck.script --output output/test_poker.json
-        "$BIN_DIR/luduscript" scripts/generate_werewolf_cards.script --output output/test_werewolf.json
+        "$BIN_DIR/luduscript" scripts/generate_poker_deck.gen --output output/test_poker.json
+        "$BIN_DIR/luduscript" scripts/generate_werewolf_cards.gen --output output/test_werewolf.json
         echo "测试完成！"
     else
         echo "错误: 找不到可执行文件，请先构建项目"

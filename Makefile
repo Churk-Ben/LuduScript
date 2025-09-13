@@ -79,8 +79,8 @@ endif
 # 测试
 test: $(BINDIR)/$(TARGET)
 	@echo "Running tests..."
-	$(BINDIR)/$(TARGET) scripts/generate_poker_deck.script --output output/test_poker.json
-	$(BINDIR)/$(TARGET) scripts/generate_werewolf_cards.script --output output/test_werewolf.json
+	$(BINDIR)/$(TARGET) scripts/generate_poker_deck.gen --output output/test_poker.json
+	$(BINDIR)/$(TARGET) scripts/generate_werewolf_cards.gen --output output/test_werewolf.json
 	@echo "Tests completed!"
 
 # 调试版本

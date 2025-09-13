@@ -1,4 +1,4 @@
-// example.script - 示例脚本
+// example.gen - 示例脚本
 for(i,10){  // i 从 1 到 10
   obj("Card", i) {
     if(i % 2 == 1) {

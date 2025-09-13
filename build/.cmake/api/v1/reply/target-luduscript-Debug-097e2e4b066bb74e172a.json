@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "bin/luduscript.exe"
+			"path" : "bin/luduscript_d.exe"
 		},
 		{
-			"path" : "bin/luduscript.pdb"
+			"path" : "bin/luduscript_d.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -66,7 +66,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-O3 -DNDEBUG -std=c++17"
+					"fragment" : "-g -std=c++17"
 				},
 				{
 					"backtrace" : 3,
@@ -85,7 +85,7 @@
 			[
 				{
 					"backtrace" : 4,
-					"define" : "NDEBUG"
+					"define" : "DEBUG"
 				}
 			],
 			"includes" : 
@@ -136,11 +136,7 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-O3 -DNDEBUG",
-				"role" : "flags"
-			},
-			{
-				"fragment" : "",
+				"fragment" : "-g",
 				"role" : "flags"
 			},
 			{
@@ -151,7 +147,7 @@
 		"language" : "CXX"
 	},
 	"name" : "luduscript",
-	"nameOnDisk" : "luduscript.exe",
+	"nameOnDisk" : "luduscript_d.exe",
 	"paths" : 
 	{
 		"build" : ".",

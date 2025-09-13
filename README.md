@@ -60,10 +60,10 @@ chmod +x build.sh
 
 ```bash
 # 生成扑克牌
-./bin/luduscript scripts/generate_poker_deck_en.script --output output/poker_cards.json
+./bin/luduscript scripts/generate_poker_deck_en.gen --output output/poker_cards.json
 
 # 生成狼人杀卡牌
-./bin/luduscript scripts/generate_werewolf_cards.script --output output/werewolf_cards.json
+./bin/luduscript scripts/generate_werewolf_cards.gen --output output/werewolf_cards.json
 ```
 
 ## 项目结构
@@ -85,8 +85,8 @@ LuduScript/
 │   ├── ast.h
 │   └── nlohmann/          # JSON库
 ├── scripts/               # 示例脚本
-│   ├── generate_poker_deck_en.script
-│   └── generate_werewolf_cards.script
+│   ├── generate_poker_deck_en.gen
+│   └── generate_werewolf_cards.gen
 ├── examples/              # 更多示例和测试文件
 ├── output/                # 输出文件目录
 ├── build/                 # 构建文件（生成）

@@ -13,10 +13,10 @@ file(REMOVE_RECURSE
   "CMakeFiles/luduscript.dir/src/parser.cpp.obj.d"
   "CMakeFiles/luduscript.dir/src/parser_expr.cpp.obj"
   "CMakeFiles/luduscript.dir/src/parser_expr.cpp.obj.d"
-  "bin/luduscript.exe"
-  "bin/luduscript.exe.manifest"
-  "bin/luduscript.pdb"
-  "lib/libluduscript.dll.a"
+  "bin/luduscript_d.exe"
+  "bin/luduscript_d.exe.manifest"
+  "bin/luduscript_d.pdb"
+  "lib/libluduscript_d.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

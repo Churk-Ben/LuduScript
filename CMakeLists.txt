@@ -67,7 +67,7 @@ install(DIRECTORY include/
 # 安装脚本示例
 install(DIRECTORY scripts/
     DESTINATION share/luduscript/scripts
-    FILES_MATCHING PATTERN "*.script" PATTERN "*.lds"
+    FILES_MATCHING PATTERN "*.gen" PATTERN "*.lds"
 )
 
 # 安装示例文件
@@ -96,11 +96,11 @@ enable_testing()
 
 # 简单的功能测试
 add_test(NAME test_poker_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.script --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
+    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.gen --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
 add_test(NAME test_werewolf_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_werewolf_cards.script --output ${CMAKE_SOURCE_DIR}/output/test_werewolf.json
+    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_werewolf_cards.gen --output ${CMAKE_SOURCE_DIR}/output/test_werewolf.json
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

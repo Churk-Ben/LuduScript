@@ -48,7 +48,7 @@
 			"destination" : "bin",
 			"paths" : 
 			[
-				"bin/luduscript.exe"
+				"bin/luduscript_d.exe"
 			],
 			"targetId" : "luduscript::@6890427a1f51a3e7e1df",
 			"targetIndex" : 1,

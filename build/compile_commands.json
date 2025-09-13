@@ -1,43 +1,43 @@
 [
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\ast.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\ast.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\ast.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\ast.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/ast.cpp",
   "output": "CMakeFiles/luduscript.dir/src/ast.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\interpreter.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\interpreter.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\interpreter.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\interpreter.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/interpreter.cpp",
   "output": "CMakeFiles/luduscript.dir/src/interpreter.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\interpreter_stmt.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\interpreter_stmt.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\interpreter_stmt.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\interpreter_stmt.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/interpreter_stmt.cpp",
   "output": "CMakeFiles/luduscript.dir/src/interpreter_stmt.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\lexer.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\lexer.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\lexer.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\lexer.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/lexer.cpp",
   "output": "CMakeFiles/luduscript.dir/src/lexer.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\main.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\main.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\main.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\main.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/main.cpp",
   "output": "CMakeFiles/luduscript.dir/src/main.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\parser.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\parser.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\parser.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\parser.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/parser.cpp",
   "output": "CMakeFiles/luduscript.dir/src/parser.cpp.obj"
 },
 {
   "directory": "F:/Code Projects/LuduScript/build",
-  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DNDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -O3 -DNDEBUG -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\parser_expr.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\parser_expr.cpp\"",
+  "command": "D:\\MySoftwares\\MinGw\\winlibs-x86_64-posix-seh-gcc-14.2.0-llvm-19.1.1-mingw-w64ucrt-12.0.0-r2\\mingw64\\bin\\g++.exe -DDEBUG @CMakeFiles/luduscript.dir/includes_CXX.rsp -g -std=c++17 -Wall -Wextra -pedantic -o CMakeFiles\\luduscript.dir\\src\\parser_expr.cpp.obj -c \"F:\\Code Projects\\LuduScript\\src\\parser_expr.cpp\"",
   "file": "F:/Code Projects/LuduScript/src/parser_expr.cpp",
   "output": "CMakeFiles/luduscript.dir/src/parser_expr.cpp.obj"
 }

@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Release-89401f3cc3c7410aba3c.json",
+					"jsonFile" : "directory-.-Debug-859b3fc5dc89903bca12.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.16"
@@ -21,7 +21,7 @@
 					]
 				}
 			],
-			"name" : "Release",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -42,14 +42,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "clean-output::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-clean-output-Release-43f95016de01f9bcb8cf.json",
+					"jsonFile" : "target-clean-output-Debug-43f95016de01f9bcb8cf.json",
 					"name" : "clean-output",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "luduscript::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-luduscript-Release-7214a72e936d94823aaf.json",
+					"jsonFile" : "target-luduscript-Debug-097e2e4b066bb74e172a.json",
 					"name" : "luduscript",
 					"projectIndex" : 0
 				}
@@ -65,6 +65,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 7
+		"minor" : 8
 	}
 }

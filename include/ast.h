@@ -117,7 +117,9 @@ struct DeclStmt : Stmt
     std::string type; // "int", "str", "bool"
     std::string name;
     std::optional<ExprPtr> init;
+    std::vector<StmtPtr> initBlock; // For statement block initialization
     DeclStmt(std::string t, std::string n, std::optional<ExprPtr> i, int l);
+    DeclStmt(std::string t, std::string n, std::vector<StmtPtr> block, int l);
 };
 
 // If statement

@@ -43,7 +43,62 @@ void Interpreter::execStmt(Stmt *s)
     if (auto ds = dynamic_cast<DeclStmt *>(s))
     {
         Value v;
-        if (ds->init.has_value())
+        if (!ds->initBlock.empty())
+        {
+            // Create new scope for the initialization block
+            env.pushScope();
+            
+            // Temporarily disable object context for block execution
+            auto savedObject = env.current_object;
+            env.current_object = std::nullopt;
+            
+            // Execute statements in the block and get the last declared variable
+            std::string lastVar;
+            for (auto& stmt : ds->initBlock)
+            {
+                execStmt(stmt.get());
+                // Track the last declared variable
+                if (auto innerDecl = dynamic_cast<DeclStmt*>(stmt.get()))
+                {
+                    lastVar = innerDecl->name;
+                }
+            }
+            
+            // Get the value of the last declared variable before popping scope
+            Value blockResult;
+            bool hasResult = false;
+            
+            if (!lastVar.empty())
+            {
+                auto varValue = env.getVar(lastVar);
+                if (varValue.has_value())
+                {
+                    blockResult = varValue.value();
+                    hasResult = true;
+                }
+            }
+            
+            // Restore object context and pop the scope
+            env.current_object = savedObject;
+            env.popScope();
+            
+            // Set the final value
+            if (hasResult)
+            {
+                v = blockResult;
+            }
+            else
+            {
+                // No valid result, use default
+                if (ds->type == "num")
+                    v = Value::makeNum(0.0);
+                else if (ds->type == "str")
+                    v = Value::makeStr("");
+                else if (ds->type == "bool")
+                    v = Value::makeBool(false);
+            }
+        }
+        else if (ds->init.has_value())
         {
             v = evalExpr(ds->init->get());
         }

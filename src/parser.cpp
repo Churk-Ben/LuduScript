@@ -45,6 +45,17 @@ void Parser::error(const std::string &msg)
     throw std::runtime_error(oss.str());
 }
 
+bool Parser::isExpressionStart()
+{
+    return cur.kind == TokenKind::NUMBER ||
+           cur.kind == TokenKind::FLOAT ||
+           cur.kind == TokenKind::STRING ||
+           cur.kind == TokenKind::IDENT ||
+           cur.kind == TokenKind::LPAREN ||
+           cur.kind == TokenKind::MINUS ||
+           cur.kind == TokenKind::NOT;
+}
+
 std::unique_ptr<Program> Parser::parseProgram()
 {
     auto prog = std::make_unique<Program>();
@@ -187,15 +198,55 @@ StmtPtr Parser::parseDecl()
     expect(TokenKind::RPAREN, "Expected ')' after variable name");
     
     std::optional<ExprPtr> init;
+    std::vector<StmtPtr> initBlock;
+    
     if (match(TokenKind::LBRACE))
     {
-        init = parseExpr();
+        // Check if it's an empty initializer block (default value)
+        if (cur.kind != TokenKind::RBRACE)
+        {
+            // Try to parse as a single expression first
+            if (isExpressionStart())
+            {
+                auto expr = parseExpr();
+                if (cur.kind == TokenKind::RBRACE)
+                {
+                    // Single expression case
+                    init = std::move(expr);
+                }
+                else
+                {
+                    // Multiple statements case - convert first expression to statement
+                    initBlock.push_back(std::make_unique<ExprStmt>(std::move(expr), cur.line));
+                    while (cur.kind != TokenKind::RBRACE && cur.kind != TokenKind::END)
+                    {
+                        initBlock.push_back(parseStmt());
+                    }
+                }
+            }
+            else
+            {
+                // Parse statements in the block
+                while (cur.kind != TokenKind::RBRACE && cur.kind != TokenKind::END)
+                {
+                    initBlock.push_back(parseStmt());
+                }
+            }
+        }
         expect(TokenKind::RBRACE, "Expected '}' after initializer");
     }
-    
+
     match(TokenKind::SEMI); // Optional semicolon
-    
-    return std::make_unique<DeclStmt>(type, name, std::move(init), line);
+
+    // Use block constructor if we have statements, otherwise use expression constructor
+    if (!initBlock.empty())
+    {
+        return std::make_unique<DeclStmt>(type, name, std::move(initBlock), line);
+    }
+    else
+    {
+        return std::make_unique<DeclStmt>(type, name, std::move(init), line);
+    }
 }
 
 std::vector<StmtPtr> Parser::parseBlock()

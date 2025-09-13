@@ -30,8 +30,9 @@ ExprStmt::ExprStmt(ExprPtr e, int l) : Stmt(l), expr(std::move(e)) {}
 // AssignStmt constructor
 AssignStmt::AssignStmt(std::string n, ExprPtr e, int l) : Stmt(l), name(std::move(n)), expr(std::move(e)) {}
 
-// DeclStmt constructor
+// DeclStmt constructors
 DeclStmt::DeclStmt(std::string t, std::string n, std::optional<ExprPtr> i, int l) : Stmt(l), type(std::move(t)), name(std::move(n)), init(std::move(i)) {}
+DeclStmt::DeclStmt(std::string t, std::string n, std::vector<StmtPtr> block, int l) : Stmt(l), type(std::move(t)), name(std::move(n)), initBlock(std::move(block)) {}
 
 // IfStmt constructor
 IfStmt::IfStmt(ExprPtr c, int l) : Stmt(l), cond(std::move(c)) {}

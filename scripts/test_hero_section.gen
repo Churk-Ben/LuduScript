@@ -1,0 +1,9 @@
+// 测试对象内部的语句块初始化
+num(base_stats) { 10 }
+
+obj("Test", 1) {
+    num(hp) {
+        num(level_bonus) { 5 }
+        num(total_hp) { base_stats + level_bonus }
+    }
+}

@@ -191,6 +191,28 @@ Value Interpreter::evalIdent(IdentExpr *id)
     if (val.has_value())
         return *val;
     
+    // If in object context, try to get field value from current object
+    if (env.current_object.has_value() && env.declared_fields.find(id->name) != env.declared_fields.end())
+    {
+        auto& obj = *env.current_object;
+        if (obj.contains(id->name))
+        {
+            auto& field = obj[id->name];
+            if (field.is_number())
+            {
+                double val = field.get<double>();
+                if (val == std::floor(val))
+                    return Value::makeInt(static_cast<ll>(val));
+                else
+                    return Value::makeNum(val);
+            }
+            else if (field.is_string())
+                return Value::makeStr(field.get<std::string>());
+            else if (field.is_boolean())
+                return Value::makeBool(field.get<bool>());
+        }
+    }
+    
     // If in object context and variable not found, treat as field name
     if (env.current_object.has_value() && env.declared_fields.find(id->name) == env.declared_fields.end())
     {

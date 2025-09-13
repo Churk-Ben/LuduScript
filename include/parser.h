@@ -17,6 +17,7 @@ private:
     bool match(TokenKind k);
     void expect(TokenKind k, const std::string &msg);
     [[noreturn]] void error(const std::string &msg);
+    bool isExpressionStart();
     
     // Expression parsing
     ExprPtr parseExpr();

@@ -1,0 +1,16 @@
+// 测试语句块初始化中的变量引用
+num(test1) {
+    num(a) { 10 }
+    num(b) { a + 5 }
+}
+
+str(test2) {
+    str(prefix) { "Hello" }
+    str(result) { prefix + " World" }
+}
+
+// 输出测试结果
+obj("TestResult", 1) {
+    num(value1) { test1 }
+    str(value2) { test2 }
+}

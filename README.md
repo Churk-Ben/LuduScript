@@ -60,63 +60,10 @@ chmod +x build.sh
 
 ```bash
 # 生成扑克牌
-./bin/luduscript scripts/generate_poker_deck.script --output output/poker_cards.json
+./bin/luduscript scripts/generate_poker_deck_en.script --output output/poker_cards.json
 
 # 生成狼人杀卡牌
 ./bin/luduscript scripts/generate_werewolf_cards.script --output output/werewolf_cards.json
-```
-
-## 语法示例
-
-### 基本语法
-
-```luduscript
-// 定义变量
-let suits = ["红桃", "黑桃", "方块", "梅花"];
-let ranks = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-
-// 创建卡牌数组
-let cards = [];
-
-// 循环生成卡牌
-for (let suit in suits) {
-    for (let rank in ranks) {
-        let card = {
-            "suit": suit,
-            "rank": rank,
-            "name": rank + "of" + suit
-        };
-        cards.push(card);
-    }
-}
-
-// 输出结果
-output(cards);
-```
-
-### 条件语句和函数
-
-```luduscript
-// 定义函数
-function createSpecialCard(name, power) {
-    return {
-        "name": name,
-        "power": power,
-        "type": "special"
-    };
-}
-
-// 使用条件语句
-let specialCards = [];
-for (let i = 0; i < 5; i++) {
-    if (i % 2 == 0) {
-        specialCards.push(createSpecialCard("魔法卡" + i, i * 10));
-    } else {
-        specialCards.push(createSpecialCard("陷阱卡" + i, i * 5));
-    }
-}
-
-output(specialCards);
 ```
 
 ## 项目结构
@@ -138,9 +85,8 @@ LuduScript/
 │   ├── ast.h
 │   └── nlohmann/          # JSON库
 ├── scripts/               # 示例脚本
-│   ├── generate_poker_deck.script
-│   ├── generate_werewolf_cards.script
-│   └── game.lds
+│   ├── generate_poker_deck_en.script
+│   └── generate_werewolf_cards.script
 ├── examples/              # 更多示例和测试文件
 ├── output/                # 输出文件目录
 ├── build/                 # 构建文件（生成）
@@ -205,7 +151,7 @@ make debug
 
 ## 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+本项目采用 Apache 2.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
 ## 更新日志
 

@@ -1,1 +1,0 @@
-[{"class":"TestCard","cost":3,"description":"这是一张用于测试的简单卡牌","id":1,"name":"测试卡牌","power":5,"type":"生物"},{"class":"TestCard","cost":2,"description":"造成4点火焰伤害","id":2,"name":"火焰法师","power":4,"type":"法术"},{"class":"TestCard","cost":1,"description":"恢复3点生命值","heal_amount":3,"id":3,"name":"治疗术","power":0,"type":"法术"}]

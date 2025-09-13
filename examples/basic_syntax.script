@@ -4,55 +4,55 @@
 // 创建玩家卡牌
 obj("Player", 1) {
     str(name) { "Alice" }
-    int(level) { 10 }
+    num(level) { 10 }
     str(class) { "战士" }
-    int(health) { 100 }
+    num(health) { 100 }
     str(weapon) { "长剑" }
 }
 
 obj("Player", 2) {
     str(name) { "Bob" }
-    int(level) { 15 }
+    num(level) { 15 }
     str(class) { "法师" }
-    int(health) { 80 }
+    num(health) { 80 }
     str(weapon) { "法杖" }
 }
 
 obj("Player", 3) {
     str(name) { "Charlie" }
-    int(level) { 8 }
+    num(level) { 8 }
     str(class) { "盗贼" }
-    int(health) { 90 }
+    num(health) { 90 }
     str(weapon) { "匕首" }
 }
 
 // 创建装备物品
-obj("Equipment", 11) {
+obj("Equipment", 1) {
     str(type) { "头盔" }
-    int(defense) { 5 }
+    num(defense) { 5 }
     str(rarity) { "普通" }
 }
 
-obj("Equipment", 12) {
+obj("Equipment", 2) {
     str(type) { "护甲" }
-    int(defense) { 10 }
+    num(defense) { 10 }
     str(rarity) { "普通" }
 }
 
-obj("Equipment", 13) {
+obj("Equipment", 3) {
     str(type) { "靴子" }
-    int(defense) { 15 }
+    num(defense) { 15 }
     str(rarity) { "稀有" }
 }
 
-obj("Equipment", 14) {
+obj("Equipment", 4) {
     str(type) { "手套" }
-    int(defense) { 20 }
+    num(defense) { 20 }
     str(rarity) { "稀有" }
 }
 
-obj("Equipment", 15) {
+obj("Equipment", 5) {
     str(type) { "项链" }
-    int(defense) { 25 }
+    num(defense) { 25 }
     str(rarity) { "史诗" }
 }

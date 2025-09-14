@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  BUILD_TYPE: Release
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -14,14 +17,14 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
-            executable_name: luduscript
             artifact_name: luduscript-linux
+            executable_extension: ""
           - os: windows-latest
-            executable_name: luduscript.exe
             artifact_name: luduscript-windows
+            executable_extension: ".exe"
           - os: macos-latest
-            executable_name: luduscript
             artifact_name: luduscript-macos
+            executable_extension: ""
 
     steps:
     - name: Checkout code
@@ -30,63 +33,41 @@ jobs:
         fetch-depth: 0
 
     - name: Setup CMake
-      uses: jwlawson/actions-setup-cmake@v2
+      uses: jwlawson/actions-setup-cmake@v1.14
       with:
-        cmake-version: '3.16'
+        cmake-version: '3.20'
 
-    - name: Create build directory
-      run: |
-        if [ ! -d "build" ]; then mkdir build; fi
-      shell: bash
-
-    - name: Setup MinGW (Windows)
+    - name: Setup build tools (Windows)
       if: matrix.os == 'windows-latest'
-      uses: msys2/setup-msys2@v2
-      with:
-        msystem: MINGW64
-        update: true
-        install: >
-          mingw-w64-x86_64-gcc
-          mingw-w64-x86_64-cmake
-          mingw-w64-x86_64-make
+      uses: microsoft/setup-msbuild@v1.3
 
-    - name: Configure CMake (Windows)
-      if: matrix.os == 'windows-latest'
+    - name: Install dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
       run: |
-        cd build
-        cmake -G "MSYS Makefiles" -DCMAKE_BUILD_TYPE=Release ..
-      shell: msys2 {0}
+        sudo apt-get update
+        sudo apt-get install -y build-essential
 
-    - name: Configure CMake (Unix)
-      if: matrix.os != 'windows-latest'
+    - name: Install dependencies (macOS)
+      if: matrix.os == 'macos-latest'
       run: |
-        cd build
-        cmake -DCMAKE_BUILD_TYPE=Release ..
-      shell: bash
+        brew install cmake
 
-    - name: Build (Windows)
-      if: matrix.os == 'windows-latest'
+    - name: Configure CMake
       run: |
-        cd build
-        cmake --build .
-      shell: msys2 {0}
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    - name: Build (Unix)
-      if: matrix.os != 'windows-latest'
+    - name: Build
       run: |
-        cd build
-        cmake --build .
-      shell: bash
+        cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.artifact_name }}
         path: |
-          build/bin/${{ matrix.executable_name }}
-          build/bin/Release/${{ matrix.executable_name }}
-          build/${{ matrix.executable_name }}
-        if-no-files-found: error
+          ${{github.workspace}}/build/bin/luduscript${{ matrix.executable_extension }}
+          ${{github.workspace}}/build/luduscript${{ matrix.executable_extension }}
+          ${{github.workspace}}/build/${{env.BUILD_TYPE}}/luduscript${{ matrix.executable_extension }}
 
   release:
     needs: build
@@ -99,37 +80,67 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Get version from CMakeLists.txt
-      id: get_version
+    - name: Get version
+      id: version
       run: |
-        VERSION=$(grep "project(LuduScript VERSION" CMakeLists.txt | sed -n 's/.*VERSION \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')
-        echo "current_version=$VERSION" >> $GITHUB_OUTPUT
+        # 获取最新的标签版本
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+        echo "Latest tag: $LATEST_TAG"
         
-        # 自动递增补丁版本号
-        IFS='.' read -ra VERSION_PARTS <<< "$VERSION"
-        MAJOR=${VERSION_PARTS[0]}
-        MINOR=${VERSION_PARTS[1]}
-        PATCH=${VERSION_PARTS[2]}
-        NEW_PATCH=$((PATCH + 1))
-        NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
-        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-
-    - name: Update version in CMakeLists.txt
-      run: |
-        sed -i "s/project(LuduScript VERSION ${{ steps.get_version.outputs.current_version }}/project(LuduScript VERSION ${{ steps.get_version.outputs.new_version }}/" CMakeLists.txt
-
-    - name: Commit version bump
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add CMakeLists.txt
-        git commit -m "Bump version to ${{ steps.get_version.outputs.new_version }}" || exit 0
-        git push
+        # 提取版本号并递增
+        if [[ $LATEST_TAG =~ ^v([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+          MAJOR=${BASH_REMATCH[1]}
+          MINOR=${BASH_REMATCH[2]}
+          PATCH=${BASH_REMATCH[3]}
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="v${MAJOR}.${MINOR}.${NEW_PATCH}"
+        else
+          NEW_VERSION="v0.1.0"
+        fi
+        
+        echo "New version: $NEW_VERSION"
+        echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        echo "tag=$NEW_VERSION" >> $GITHUB_OUTPUT
 
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
-        path: artifacts
+        path: ./artifacts
+
+    - name: Prepare release assets
+      run: |
+        mkdir -p release
+        
+        # 处理 Linux 版本
+        if [ -f "./artifacts/luduscript-linux/luduscript" ]; then
+          cp "./artifacts/luduscript-linux/luduscript" "./release/luduscript-linux"
+          chmod +x "./release/luduscript-linux"
+        elif [ -f "./artifacts/luduscript-linux/bin/luduscript" ]; then
+          cp "./artifacts/luduscript-linux/bin/luduscript" "./release/luduscript-linux"
+          chmod +x "./release/luduscript-linux"
+        fi
+        
+        # 处理 Windows 版本
+        if [ -f "./artifacts/luduscript-windows/luduscript.exe" ]; then
+          cp "./artifacts/luduscript-windows/luduscript.exe" "./release/luduscript-windows.exe"
+        elif [ -f "./artifacts/luduscript-windows/bin/luduscript.exe" ]; then
+          cp "./artifacts/luduscript-windows/bin/luduscript.exe" "./release/luduscript-windows.exe"
+        elif [ -f "./artifacts/luduscript-windows/Release/luduscript.exe" ]; then
+          cp "./artifacts/luduscript-windows/Release/luduscript.exe" "./release/luduscript-windows.exe"
+        fi
+        
+        # 处理 macOS 版本
+        if [ -f "./artifacts/luduscript-macos/luduscript" ]; then
+          cp "./artifacts/luduscript-macos/luduscript" "./release/luduscript-macos"
+          chmod +x "./release/luduscript-macos"
+        elif [ -f "./artifacts/luduscript-macos/bin/luduscript" ]; then
+          cp "./artifacts/luduscript-macos/bin/luduscript" "./release/luduscript-macos"
+          chmod +x "./release/luduscript-macos"
+        fi
+        
+        # 列出所有文件用于调试
+        echo "Release files:"
+        ls -la ./release/
 
     - name: Create Release
       id: create_release
@@ -137,46 +148,53 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v${{ steps.get_version.outputs.new_version }}
-        release_name: Release v${{ steps.get_version.outputs.new_version }}
+        tag_name: ${{ steps.version.outputs.tag }}
+        release_name: LuduScript ${{ steps.version.outputs.version }}
         body: |
-          自动构建的 LuduScript v${{ steps.get_version.outputs.new_version }} 版本
+          ## LuduScript ${{ steps.version.outputs.version }}
           
-          ## 更改内容
-          - 自动构建和发布
-          - 支持多平台 (Windows, Linux, macOS)
+          自动构建发布版本
           
-          ## 下载
-          请从下方附件中下载适合您操作系统的可执行文件。
+          ### 更改内容
+          - 自动构建的发行版
+          - 支持多平台：Linux、Windows、macOS
+          
+          ### 下载
+          - **Linux**: luduscript-linux
+          - **Windows**: luduscript-windows.exe  
+          - **macOS**: luduscript-macos
         draft: false
         prerelease: false
 
-    - name: Upload Windows Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/luduscript-windows/luduscript.exe
-        asset_name: luduscript-windows.exe
-        asset_content_type: application/octet-stream
-
     - name: Upload Linux Release Asset
+      if: hashFiles('./release/luduscript-linux') != ''
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/luduscript-linux/luduscript
+        asset_path: ./release/luduscript-linux
         asset_name: luduscript-linux
         asset_content_type: application/octet-stream
 
-    - name: Upload macOS Release Asset
+    - name: Upload Windows Release Asset
+      if: hashFiles('./release/luduscript-windows.exe') != ''
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: artifacts/luduscript-macos/luduscript
+        asset_path: ./release/luduscript-windows.exe
+        asset_name: luduscript-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS Release Asset
+      if: hashFiles('./release/luduscript-macos') != ''
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./release/luduscript-macos
         asset_name: luduscript-macos
         asset_content_type: application/octet-stream

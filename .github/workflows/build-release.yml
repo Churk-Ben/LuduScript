@@ -73,19 +73,13 @@ jobs:
       run: |
         cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-    - name: Upload artifacts (Windows)
-      if: matrix.os == 'windows-latest'
-      uses: actions/upload-artifact@v4
-      with:
-        name: luduscript-windows
-        path: build/Release/luduscript.exe
-
-    - name: Upload artifacts (Unix)
-      if: matrix.os != 'windows-latest'
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.artifact_name }}
-        path: build/luduscript${{ matrix.executable_extension }}
+        path: |
+          build/**/*ludu*${{ matrix.executable_extension }}
+          build/*${{ matrix.executable_extension }}
 
   release:
     needs: build

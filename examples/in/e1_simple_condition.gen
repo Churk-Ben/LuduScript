@@ -1,0 +1,14 @@
+// 简单条件语句
+num(test_num) { 1 }
+
+str(result) {
+    if(test_num == 1) {
+        "A"
+    } else {
+        "Other"
+    }
+}
+
+obj("Test", 1) {
+    str(display) { result }
+}

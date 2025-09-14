@@ -1,0 +1,17 @@
+// 测试条件语句的语法
+num(test_value) { 1 }
+
+str(result) {
+    num(test_value) { 5 }
+    str(temp) { "" }
+    if(test_value > 3) {
+        str(temp) { "Greater than 3" }
+    } else {
+        str(temp) { "Less than or equal to 3" }
+    }
+    temp
+}
+
+obj("Test", 1) {
+    str(display) { result }
+}

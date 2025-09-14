@@ -1,0 +1,13 @@
+// 测试初始化块中的条件语句
+obj("Test", 1) {
+    num(base_value) { 5 }
+    
+    str(display) {
+        num(temp_value) { base_value }
+        if(temp_value > 3) {
+            "Greater than 3"
+        } else {
+            "Less or equal to 3"
+        }
+    }
+}

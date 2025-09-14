@@ -1,0 +1,5 @@
+// 测试对象内字段访问
+obj("Test", 1) {
+    num(value) { 1 }
+    str(display) { "Value is: " + value }
+}

@@ -39,7 +39,11 @@ jobs:
 
     - name: Setup build tools (Windows)
       if: matrix.os == 'windows-latest'
-      uses: microsoft/setup-msbuild@v1.3
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Setup Visual Studio environment (Windows)
+      if: matrix.os == 'windows-latest'
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Install dependencies (Ubuntu)
       if: matrix.os == 'ubuntu-latest'
@@ -52,7 +56,13 @@ jobs:
       run: |
         brew install cmake
 
-    - name: Configure CMake
+    - name: Configure CMake (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -G "Visual Studio 17 2022" -A x64
+        
+    - name: Configure CMake (Unix)
+      if: matrix.os != 'windows-latest'
       run: |
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 

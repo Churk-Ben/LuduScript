@@ -1,0 +1,151 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            executable_name: luduscript
+            artifact_name: luduscript-linux
+          - os: windows-latest
+            executable_name: luduscript.exe
+            artifact_name: luduscript-windows
+          - os: macos-latest
+            executable_name: luduscript
+            artifact_name: luduscript-macos
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.16'
+
+    - name: Configure CMake (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 17 2022" -A x64
+
+    - name: Configure CMake (Unix)
+      if: matrix.os != 'windows-latest'
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: |
+        cmake --build build --config Release
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact_name }}
+        path: |
+          build/bin/${{ matrix.executable_name }}
+          build/bin/Release/${{ matrix.executable_name }}
+        if-no-files-found: error
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get version from CMakeLists.txt
+      id: get_version
+      run: |
+        VERSION=$(grep "project(LuduScript VERSION" CMakeLists.txt | sed -n 's/.*VERSION \([0-9]\+\.[0-9]\+\.[0-9]\+\).*/\1/p')
+        echo "current_version=$VERSION" >> $GITHUB_OUTPUT
+        
+        # 自动递增补丁版本号
+        IFS='.' read -ra VERSION_PARTS <<< "$VERSION"
+        MAJOR=${VERSION_PARTS[0]}
+        MINOR=${VERSION_PARTS[1]}
+        PATCH=${VERSION_PARTS[2]}
+        NEW_PATCH=$((PATCH + 1))
+        NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Update version in CMakeLists.txt
+      run: |
+        sed -i "s/project(LuduScript VERSION ${{ steps.get_version.outputs.current_version }}/project(LuduScript VERSION ${{ steps.get_version.outputs.new_version }}/" CMakeLists.txt
+
+    - name: Commit version bump
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add CMakeLists.txt
+        git commit -m "Bump version to ${{ steps.get_version.outputs.new_version }}" || exit 0
+        git push
+
+    - name: Download all artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: artifacts
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.get_version.outputs.new_version }}
+        release_name: Release v${{ steps.get_version.outputs.new_version }}
+        body: |
+          自动构建的 LuduScript v${{ steps.get_version.outputs.new_version }} 版本
+          
+          ## 更改内容
+          - 自动构建和发布
+          - 支持多平台 (Windows, Linux, macOS)
+          
+          ## 下载
+          请从下方附件中下载适合您操作系统的可执行文件。
+        draft: false
+        prerelease: false
+
+    - name: Upload Windows Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/luduscript-windows/luduscript.exe
+        asset_name: luduscript-windows.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Linux Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/luduscript-linux/luduscript
+        asset_name: luduscript-linux
+        asset_content_type: application/octet-stream
+
+    - name: Upload macOS Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: artifacts/luduscript-macos/luduscript
+        asset_name: luduscript-macos
+        asset_content_type: application/octet-stream

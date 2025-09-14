@@ -7,7 +7,9 @@ Lexer::Lexer(std::string s) : src(std::move(s)) {}
 
 char Lexer::peek() const
 {
-    return i < src.size() ? src[i] : '\0';
+    if (i < src.size())
+        return src[i];
+    return '\0';
 }
 
 char Lexer::get()
@@ -33,7 +35,7 @@ void Lexer::skipWhitespace()
         }
         else if (c == '/' && i + 1 < src.size() && src[i + 1] == '/')
         {
-            // Skip line comment
+            // 跳过注释
             while (peek() != '\n' && peek() != '\0')
                 get();
         }
@@ -48,10 +50,11 @@ Token Lexer::nextToken()
 {
     skipWhitespace();
     char c = peek();
+    // 结束Token
     if (c == '\0')
         return Token(TokenKind::END, "", line);
-    
-    // Single character tokens
+
+    // 单字符Token
     if (c == '(')
     {
         get();
@@ -112,8 +115,8 @@ Token Lexer::nextToken()
         get();
         return Token(TokenKind::MOD, "%", line);
     }
-    
-    // Two character tokens
+
+    // 双字符Token
     if (c == '=')
     {
         get();
@@ -122,7 +125,7 @@ Token Lexer::nextToken()
             get();
             return Token(TokenKind::EQ, "==", line);
         }
-        return Token(TokenKind::ASSIGN, "=", line);
+        return Token(TokenKind::ASSIGN, "=", line); // TODO 这里有赋值符号的token
     }
     if (c == '!')
     {
@@ -166,15 +169,15 @@ Token Lexer::nextToken()
         get();
         return Token(TokenKind::OR, "||", line);
     }
-    
-    // Identifiers and keywords
+
+    // 标识符或保留字
     if (std::isalpha(c) || c == '_')
     {
         std::string s;
         while (std::isalnum(peek()) || peek() == '_')
             s.push_back(get());
-        
-        // Check for keywords
+
+        // 检查保留字
         if (s == "if")
             return Token(TokenKind::KW_IF, s, line);
         if (s == "elif")
@@ -196,45 +199,46 @@ Token Lexer::nextToken()
         if (s == "continue")
             return Token(TokenKind::KW_CONTINUE, s, line);
         if (s == "true" || s == "false")
-            return Token(TokenKind::IDENT, s, line); // Handle as ident for simplicity
-        
+            return Token(TokenKind::IDENT, s, line); // TODO 更新布尔字面量设计
+
         return Token(TokenKind::IDENT, s, line);
     }
-    
+
     // Numbers
     if (std::isdigit(c))
     {
         std::string s;
         while (std::isdigit(peek()))
             s.push_back(get());
-        
-        // Check for decimal point
+
+        // 检查是否有小数点
         if (peek() == '.')
         {
-            s.push_back(get()); // consume '.'
-            // Must have at least one digit after decimal point
-            if (!std::isdigit(peek()))
+            // 先预览小数点后是否有数字
+            size_t saved_pos = i;
+            get(); // 消费小数点
+
+            if (std::isdigit(peek()))
             {
-                // Put back the dot and return integer
-                i--; // put back the '.'
-                s.pop_back(); // remove '.' from string
-                return Token(TokenKind::NUMBER, s, line);
+                // 有效的小数, 添加小数点和小数部分
+                s.push_back('.');
+                while (std::isdigit(peek()))
+                    s.push_back(get());
             }
-            while (std::isdigit(peek()))
-                s.push_back(get());
-            
-            // Return FLOAT token for numbers with decimal point
-            return Token(TokenKind::FLOAT, s, line);
+            else
+            {
+                // 小数点后没有数字, 回退
+                i = saved_pos;
+            }
         }
-        
-        // Return NUMBER token for integers
+
         return Token(TokenKind::NUMBER, s, line);
     }
-    
+
     // Strings
     if (c == '"')
     {
-        get(); // consume "
+        get(); // 消费 "
         std::string s;
         while (true)
         {
@@ -264,8 +268,8 @@ Token Lexer::nextToken()
         }
         return Token(TokenKind::STRING, s, line);
     }
-    
-    // Unknown character
+
+    // 未知Token
     get();
     return Token(TokenKind::UNKNOWN, std::string(1, c), line);
 }

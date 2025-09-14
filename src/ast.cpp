@@ -1,7 +1,7 @@
 #include "ast.h"
 
 // LiteralExpr constructors
-LiteralExpr::LiteralExpr(ll v, int l) : Expr(l), kind(Kind::NUMBER), ival(v) {}
+LiteralExpr::LiteralExpr(ll v, int l) : Expr(l), kind(Kind::INTEGER), ival(v) {}
 LiteralExpr::LiteralExpr(double d, int l) : Expr(l), kind(Kind::FLOAT), dval(d) {}
 LiteralExpr::LiteralExpr(std::string s, int l) : Expr(l), kind(Kind::STRING), sval(std::move(s)) {}
 LiteralExpr::LiteralExpr(bool b, int l) : Expr(l), kind(Kind::BOOL), bval(b) {}

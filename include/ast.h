@@ -15,49 +15,53 @@ struct Node
     virtual ~Node() = default;
 };
 
-// Expression nodes
+// Expression nodes 表达式节点
 struct Expr : Node
 {
     explicit Expr(int l = 1) : Node(l) {}
 };
 using ExprPtr = std::unique_ptr<Expr>;
 
-// Statement nodes
+// Statement nodes 语句节点
 struct Stmt : Node
 {
     explicit Stmt(int l = 1) : Node(l) {}
 };
 using StmtPtr = std::unique_ptr<Stmt>;
 
-// Literal expressions
+// Literal expressions 字面量表达式
 struct LiteralExpr : Expr
 {
     enum class Kind
     {
-        NUMBER,
-        FLOAT,
+        INTEGER, // 整数类型，使用ival
+        FLOAT,   // 浮点数类型，使用dval
         STRING,
         BOOL
     } kind;
+
+    union
+    {
+        ll ival;     // 整数值
+        double dval; // 浮点数值
+    };
     std::string sval;
-    ll ival;
-    double dval;
     bool bval;
-    
-    LiteralExpr(ll v, int l);
-    LiteralExpr(double d, int l);
+
+    LiteralExpr(ll v, int l);     // 整数构造函数
+    LiteralExpr(double d, int l); // 浮点数构造函数
     LiteralExpr(std::string s, int l);
     LiteralExpr(bool b, int l);
 };
 
-// Identifier expressions
+// Identifier expressions 标识符表达式
 struct IdentExpr : Expr
 {
     std::string name;
     IdentExpr(std::string n, int l);
 };
 
-// Unary expressions
+// Unary expressions 一元表达式(操作符 + 右操作数)
 struct UnaryExpr : Expr
 {
     std::string op;
@@ -65,7 +69,7 @@ struct UnaryExpr : Expr
     UnaryExpr(std::string o, ExprPtr r, int l);
 };
 
-// Binary expressions
+// Binary expressions 二元表达式(左操作数 + 操作符 + 右操作数)
 struct BinaryExpr : Expr
 {
     std::string op;
@@ -73,7 +77,7 @@ struct BinaryExpr : Expr
     BinaryExpr(ExprPtr l, std::string o, ExprPtr r, int ln);
 };
 
-// Function call expressions
+// Function call expressions 函数调用表达式(函数名 + 实参列表) TODO 这个似乎解释器还不支持
 struct CallExpr : Expr
 {
     ExprPtr callee;
@@ -81,7 +85,7 @@ struct CallExpr : Expr
     CallExpr(ExprPtr c, std::vector<ExprPtr> a, int l);
 };
 
-// Member access expressions
+// Member access expressions 成员访问表达式(目标对象 + 成员名) TODO 这个似乎解释器还不支持
 struct AccessExpr : Expr
 {
     ExprPtr target;
@@ -89,21 +93,21 @@ struct AccessExpr : Expr
     AccessExpr(ExprPtr t, std::string m, int l);
 };
 
-// Program (root node)
+// Program (root node) 程序(根节点)
 struct Program : Node
 {
     std::vector<StmtPtr> stmts;
     Program();
 };
 
-// Expression statement
+// Expression statement 表达式语句
 struct ExprStmt : Stmt
 {
     ExprPtr expr;
     ExprStmt(ExprPtr e, int l);
 };
 
-// Assignment statement
+// Assignment statement 赋值语句(变量名 + 表达式)
 struct AssignStmt : Stmt
 {
     std::string name;
@@ -111,10 +115,12 @@ struct AssignStmt : Stmt
     AssignStmt(std::string n, ExprPtr e, int l);
 };
 
-// Declaration statement
+// Declaration statement 声明语句(类型 + 变量名 + 初始化表达式)
+// 声明语句(类型 + 变量名 + 初始化表达式)
+// 声明语句(类型 + 变量名 + 初始化语句块)
 struct DeclStmt : Stmt
 {
-    std::string type; // "int", "str", "bool"
+    std::string type; // "num", "str", "bool"
     std::string name;
     std::optional<ExprPtr> init;
     std::vector<StmtPtr> initBlock; // For statement block initialization
@@ -122,7 +128,7 @@ struct DeclStmt : Stmt
     DeclStmt(std::string t, std::string n, std::vector<StmtPtr> block, int l);
 };
 
-// If statement
+// If statement 条件语句(条件 + 语句块 + 可选的elif语句块 + 可选的else语句块)
 struct IfStmt : Stmt
 {
     ExprPtr cond;
@@ -132,7 +138,7 @@ struct IfStmt : Stmt
     IfStmt(ExprPtr c, int l);
 };
 
-// For statement
+// For statement 循环语句(迭代变量 + 迭代范围 + 语句块)
 struct ForStmt : Stmt
 {
     std::string iter;
@@ -141,7 +147,7 @@ struct ForStmt : Stmt
     ForStmt(std::string it, int l);
 };
 
-// Object statement
+// Object statement 对象语句(类名 + 可选的对象ID + 语句块)
 struct ObjStmt : Stmt
 {
     std::string className;
@@ -150,13 +156,13 @@ struct ObjStmt : Stmt
     ObjStmt(std::string c, ExprPtr id, int l);
 };
 
-// Break statement
+// Break statement 中断语句
 struct BreakStmt : Stmt
 {
     BreakStmt(int l);
 };
 
-// Continue statement
+// Continue statement 继续语句
 struct ContinueStmt : Stmt
 {
     ContinueStmt(int l);

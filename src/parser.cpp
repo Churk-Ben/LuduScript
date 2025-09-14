@@ -48,9 +48,10 @@ void Parser::error(const std::string &msg)
 bool Parser::isExpressionStart()
 {
     return cur.kind == TokenKind::NUMBER ||
-           cur.kind == TokenKind::FLOAT ||
            cur.kind == TokenKind::STRING ||
            cur.kind == TokenKind::IDENT ||
+           cur.kind == TokenKind::KW_TRUE ||
+           cur.kind == TokenKind::KW_FALSE ||
            cur.kind == TokenKind::LPAREN ||
            cur.kind == TokenKind::MINUS ||
            cur.kind == TokenKind::NOT;
@@ -89,6 +90,27 @@ StmtPtr Parser::parseStmt()
         consume();
         match(TokenKind::SEMI); // Optional semicolon
         return std::make_unique<ContinueStmt>(line);
+    }
+    
+    // Check for assignment: IDENT = expr
+    if (cur.kind == TokenKind::IDENT)
+    {
+        // 需要前瞻来判断是否为赋值语句
+        // 创建临时词法分析器来检查下一个token
+        Lexer tempLex = lex; // 复制当前词法分析器状态
+        Token tempToken = tempLex.nextToken(); // 获取下一个token
+        
+        if (tempToken.kind == TokenKind::ASSIGN)
+        {
+            // 这是赋值语句
+            int line = cur.line;
+            std::string name = cur.text;
+            consume(); // consume IDENT
+            expect(TokenKind::ASSIGN, "Expected '='");
+            auto expr = parseExpr();
+            match(TokenKind::SEMI); // Optional semicolon
+            return std::make_unique<AssignStmt>(name, std::move(expr), line);
+        }
     }
     
     // Expression statement

@@ -120,21 +120,25 @@ ExprPtr Parser::parsePrimary()
 {
     int line = cur.line;
     
-    // Numbers (integers)
+    // Numbers (integers and floating point)
     if (cur.kind == TokenKind::NUMBER)
     {
-        ll value = std::stoll(cur.text);
+        std::string text = cur.text;
         consume();
-        auto expr = std::make_unique<LiteralExpr>(value, line);
-        return parseCall(std::move(expr));
-    }
-    
-    // Floating point numbers
-    if (cur.kind == TokenKind::FLOAT)
-    {
-        double value = std::stod(cur.text);
-        consume();
-        auto expr = std::make_unique<LiteralExpr>(value, line);
+        
+        ExprPtr expr;
+        // 检查是否包含小数点来判断是整数还是浮点数
+        if (text.find('.') != std::string::npos)
+        {
+            double value = std::stod(text);
+            expr = std::make_unique<LiteralExpr>(value, line);
+        }
+        else
+        {
+            ll value = std::stoll(text);
+            expr = std::make_unique<LiteralExpr>(value, line);
+        }
+        
         return parseCall(std::move(expr));
     }
     
@@ -147,20 +151,27 @@ ExprPtr Parser::parsePrimary()
         return parseCall(std::move(expr));
     }
     
-    // Identifiers (including true/false)
+    // Boolean literals
+    if (cur.kind == TokenKind::KW_TRUE)
+    {
+        consume();
+        auto expr = std::make_unique<LiteralExpr>(true, line);
+        return parseCall(std::move(expr));
+    }
+    
+    if (cur.kind == TokenKind::KW_FALSE)
+    {
+        consume();
+        auto expr = std::make_unique<LiteralExpr>(false, line);
+        return parseCall(std::move(expr));
+    }
+    
+    // Identifiers
     if (cur.kind == TokenKind::IDENT)
     {
         std::string name = cur.text;
         consume();
-        
-        ExprPtr expr;
-        if (name == "true")
-            expr = std::make_unique<LiteralExpr>(true, line);
-        else if (name == "false")
-            expr = std::make_unique<LiteralExpr>(false, line);
-        else
-            expr = std::make_unique<IdentExpr>(name, line);
-        
+        auto expr = std::make_unique<IdentExpr>(name, line);
         return parseCall(std::move(expr));
     }
     

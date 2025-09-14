@@ -175,13 +175,17 @@ Value Interpreter::evalExpr(Expr *e)
 
 Value Interpreter::evalLiteral(LiteralExpr *lit)
 {
-    if (lit->kind == LiteralExpr::Kind::NUMBER)
+    if (lit->kind == LiteralExpr::Kind::INTEGER)
         return Value::makeInt(lit->ival);
     if (lit->kind == LiteralExpr::Kind::FLOAT)
         return Value::makeNum(lit->dval);
     if (lit->kind == LiteralExpr::Kind::STRING)
         return Value::makeStr(lit->sval);
-    return Value::makeBool(lit->bval);
+    if (lit->kind == LiteralExpr::Kind::BOOL)
+        return Value::makeBool(lit->bval);
+    
+    // 默认返回值，不应该到达这里
+    throw std::runtime_error("Unknown literal kind");
 }
 
 Value Interpreter::evalIdent(IdentExpr *id)

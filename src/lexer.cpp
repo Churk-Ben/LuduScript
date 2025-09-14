@@ -198,8 +198,10 @@ Token Lexer::nextToken()
             return Token(TokenKind::KW_BREAK, s, line);
         if (s == "continue")
             return Token(TokenKind::KW_CONTINUE, s, line);
-        if (s == "true" || s == "false")
-            return Token(TokenKind::IDENT, s, line); // TODO 更新布尔字面量设计
+        if (s == "true")
+            return Token(TokenKind::KW_TRUE, s, line);
+        if (s == "false")
+            return Token(TokenKind::KW_FALSE, s, line);
 
         return Token(TokenKind::IDENT, s, line);
     }

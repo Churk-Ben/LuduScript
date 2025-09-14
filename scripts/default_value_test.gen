@@ -1,4 +1,0 @@
-// 测试变量默认值
-num(test_num_default)
-str(test_str_default)
-bool(test_bool_default)

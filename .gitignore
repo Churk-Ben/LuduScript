@@ -39,3 +39,31 @@
 
 # debug information files
 *.dwo
+
+# CMake generated files
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Test and temporary files
+Testing/
+Temporary/
+*.log
+
+# Output folder
+output/
+
+# Script generated files
+scripts/*.gen
+
+# Backup and temporary files
+*~
+*.swp
+*.bak
+
+# Old executables
+old/
+

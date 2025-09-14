@@ -1,5 +1,0 @@
-// 最简单的语法测试
-num(test) { 42 }
-obj("Card", 1) {
-    num(value) { 10 }
-}

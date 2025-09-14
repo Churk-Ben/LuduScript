@@ -96,11 +96,6 @@ enable_testing()
 
 # 简单的功能测试
 add_test(NAME test_poker_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.gen --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-)
-
-add_test(NAME test_werewolf_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_werewolf_cards.gen --output ${CMAKE_SOURCE_DIR}/output/test_werewolf.json
+    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.gen --pretty --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

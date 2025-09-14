@@ -80,6 +80,15 @@ jobs:
         path: |
           build/**/*ludu*${{ matrix.executable_extension }}
           build/*${{ matrix.executable_extension }}
+          
+    - name: 🔍 看 Windows 到底生成了啥
+      if: matrix.os == 'windows-latest'
+      shell: cmd
+      run: |
+        echo ==== 目录树 ====
+        tree /F build || dir /S build
+        echo ==== 专门找 exe ====
+        dir build\*ludu*.exe /S /B || echo "没找到 build\*ludu*.exe"
 
   release:
     needs: build

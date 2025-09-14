@@ -9,7 +9,6 @@ enum class TokenKind
     IDENT,
     // 基本数据类型
     NUMBER,
-    FLOAT, // TODO 统一为 NUMBER
     STRING,
     BOOL,
     // 关键字

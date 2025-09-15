@@ -56,13 +56,35 @@ void Interpreter::execStmt(Stmt *s)
             bool hasLastExpr = false;
             std::string lastVar;
             
-            for (auto& stmt : ds->initBlock)
+            for (size_t i = 0; i < ds->initBlock.size(); ++i)
             {
+                auto& stmt = ds->initBlock[i];
+                bool isLastStmt = (i == ds->initBlock.size() - 1);
+                
                 // Check if this is an expression statement (the last expression should be returned)
                 if (auto exprStmt = dynamic_cast<ExprStmt*>(stmt.get()))
                 {
                     lastExprValue = evalExpr(exprStmt->expr.get());
                     hasLastExpr = true;
+                }
+                // Special handling for if statements that can return values
+                else if (isLastStmt)
+                {
+                    if (auto ifStmt = dynamic_cast<IfStmt*>(stmt.get()))
+                    {
+                        // For if statements as the last statement, we need to capture their return value
+                        lastExprValue = execIfWithReturn(ifStmt);
+                        hasLastExpr = true;
+                    }
+                    else
+                    {
+                        execStmt(stmt.get());
+                        // If it's a declaration, track it as potential last variable
+                        if (auto innerDecl = dynamic_cast<DeclStmt*>(stmt.get()))
+                        {
+                            lastVar = innerDecl->name;
+                        }
+                    }
                 }
                 else
                 {
@@ -320,6 +342,74 @@ void Interpreter::execStmt(Stmt *s)
     }
     
     throw std::runtime_error("Unknown statement node");
+}
+
+// Helper function to execute if statement and return its value
+Value Interpreter::execIfWithReturn(IfStmt *is)
+{
+    Value cond = evalExpr(is->cond.get());
+    if (cond.toBool())
+    {
+        return execBlockWithReturn(is->thenBody);
+    }
+    else
+    {
+        // Check elif conditions
+        for (auto &elif : is->elifs)
+        {
+            Value elifCond = evalExpr(elif.first.get());
+            if (elifCond.toBool())
+            {
+                return execBlockWithReturn(elif.second);
+            }
+        }
+        
+        // Execute else block if available
+        if (!is->elseBody.empty())
+        {
+            return execBlockWithReturn(is->elseBody);
+        }
+    }
+    
+    // No matching condition, return default value
+    return Value::makeNum(0.0);
+}
+
+// Helper function to execute block and return the last expression value
+Value Interpreter::execBlockWithReturn(const std::vector<StmtPtr> &body)
+{
+    env.pushScope();
+    
+    Value lastValue = Value::makeNum(0.0);
+    bool hasValue = false;
+    
+    for (size_t i = 0; i < body.size(); ++i)
+    {
+        auto& stmt = body[i];
+        bool isLastStmt = (i == body.size() - 1);
+        
+        if (isLastStmt)
+        {
+            if (auto exprStmt = dynamic_cast<ExprStmt*>(stmt.get()))
+            {
+                // Last statement is an expression, return its value
+                lastValue = evalExpr(exprStmt->expr.get());
+                hasValue = true;
+            }
+            else
+            {
+                execStmt(stmt.get());
+            }
+        }
+        else
+        {
+            execStmt(stmt.get());
+        }
+    }
+    
+    env.popScope();
+    
+    return hasValue ? lastValue : Value::makeNum(0.0);
 }
 
 void Interpreter::execBlock(const std::vector<StmtPtr> &body)

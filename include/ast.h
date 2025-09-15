@@ -156,14 +156,16 @@ struct ObjStmt : Stmt
     ObjStmt(std::string c, ExprPtr id, int l);
 };
 
-// Break statement 中断语句
+// Break statement 跳出语句
 struct BreakStmt : Stmt
 {
-    BreakStmt(int l);
+    std::vector<StmtPtr> body; // 跳出时执行的语句块
+    BreakStmt(std::vector<StmtPtr> b, int l);
 };
 
 // Continue statement 继续语句
 struct ContinueStmt : Stmt
 {
-    ContinueStmt(int l);
+    std::vector<StmtPtr> body; // 继续时执行的语句块
+    ContinueStmt(std::vector<StmtPtr> b, int l);
 };

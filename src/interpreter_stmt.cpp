@@ -286,11 +286,21 @@ void Interpreter::execStmt(Stmt *s)
     
     if (auto bs = dynamic_cast<BreakStmt *>(s))
     {
+        // 执行break语句块中的语句
+        for (const auto &stmt : bs->body)
+        {
+            execStmt(stmt.get());
+        }
         throw BreakException();
     }
     
     if (auto cs = dynamic_cast<ContinueStmt *>(s))
     {
+        // 执行continue语句块中的语句
+        for (const auto &stmt : cs->body)
+        {
+            execStmt(stmt.get());
+        }
         throw ContinueException();
     }
     

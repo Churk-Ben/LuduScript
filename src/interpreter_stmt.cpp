@@ -48,27 +48,43 @@ void Interpreter::execStmt(Stmt *s)
             // Create new scope for the initialization block
             env.pushScope();
             
-            // Temporarily disable object context for block execution
-            auto savedObject = env.current_object;
-            env.current_object = std::nullopt;
+            // Keep object context active so fields can be accessed in initialization blocks
+            // This is required by SYNTAX.md specification
             
-            // Execute statements in the block and get the last declared variable
+            // Execute statements in the block and track the last expression value
+            Value lastExprValue;
+            bool hasLastExpr = false;
             std::string lastVar;
+            
             for (auto& stmt : ds->initBlock)
             {
-                execStmt(stmt.get());
-                // Track the last declared variable
-                if (auto innerDecl = dynamic_cast<DeclStmt*>(stmt.get()))
+                // Check if this is an expression statement (the last expression should be returned)
+                if (auto exprStmt = dynamic_cast<ExprStmt*>(stmt.get()))
                 {
-                    lastVar = innerDecl->name;
+                    lastExprValue = evalExpr(exprStmt->expr.get());
+                    hasLastExpr = true;
+                }
+                else
+                {
+                    execStmt(stmt.get());
+                    // If it's a declaration, track it as potential last variable
+                    if (auto innerDecl = dynamic_cast<DeclStmt*>(stmt.get()))
+                    {
+                        lastVar = innerDecl->name;
+                    }
                 }
             }
             
-            // Get the value of the last declared variable before popping scope
+            // Get the final value: prefer last expression, then last declared variable
             Value blockResult;
             bool hasResult = false;
             
-            if (!lastVar.empty())
+            if (hasLastExpr)
+            {
+                blockResult = lastExprValue;
+                hasResult = true;
+            }
+            else if (!lastVar.empty())
             {
                 auto varValue = env.getVar(lastVar);
                 if (varValue.has_value())
@@ -78,8 +94,7 @@ void Interpreter::execStmt(Stmt *s)
                 }
             }
             
-            // Restore object context and pop the scope
-            env.current_object = savedObject;
+            // Pop the scope
             env.popScope();
             
             // Set the final value

@@ -3,7 +3,7 @@ num(test_num) { 1 }
 
 str(result) {
     if(test_num == 1) { "A" }
-    else () { "Other" }
+    else() { "Other" }
 }
 
 obj("Test", 1) {

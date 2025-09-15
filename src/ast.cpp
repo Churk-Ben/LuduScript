@@ -43,6 +43,6 @@ ForStmt::ForStmt(std::string it, int l) : Stmt(l), iter(std::move(it)) {}
 // ObjStmt constructor
 ObjStmt::ObjStmt(std::string c, ExprPtr id, int l) : Stmt(l), className(std::move(c)), idExpr(std::move(id)) {}
 
-BreakStmt::BreakStmt(int l) : Stmt(l) {}
+BreakStmt::BreakStmt(std::vector<StmtPtr> b, int l) : Stmt(l), body(std::move(b)) {}
 
-ContinueStmt::ContinueStmt(int l) : Stmt(l) {}
+ContinueStmt::ContinueStmt(std::vector<StmtPtr> b, int l) : Stmt(l), body(std::move(b)) {}

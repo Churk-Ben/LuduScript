@@ -77,6 +77,10 @@ private:
     void execStmt(Stmt *s);
     void execBlock(const std::vector<StmtPtr> &body);
     
+    // Helper functions for return values
+    Value execIfWithReturn(IfStmt *is);
+    Value execBlockWithReturn(const std::vector<StmtPtr> &body);
+    
 public:
     Interpreter() = default;
     

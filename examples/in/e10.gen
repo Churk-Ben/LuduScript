@@ -1,0 +1,85 @@
+// 综合测试：验证所有修复后的功能
+// 包括作用域、字段引用、控制流、复杂初始化块
+
+// 全局变量
+num(global_base) { 100 }
+str(global_prefix) { "Test_" }
+
+obj("ComprehensiveTest", 9999) {
+    // 基础字段
+    num(level) { 5 }
+    str(name) { global_prefix + "Item" }
+    
+    // 测试字段相互引用
+    num(power) {
+        level * 10  // 5 * 10 = 50
+    }
+    
+    // 测试复杂初始化块
+    num(calculated_value) {
+        num(temp) { 0 }
+        
+        // 使用条件语句
+        if (level > 3) {
+            temp = power + global_base  // 50 + 100 = 150
+        } else {
+            temp = power
+        }
+        
+        // 使用循环
+        for(i, 1, 3) {
+            temp = temp + i  // 150 + 1 + 2 + 3 = 156
+        }
+        
+        temp  // 返回最终计算结果
+    }
+    
+    // 测试嵌套控制流
+    num(nested_result) {
+        num(sum) { 0 }
+        
+        for(x, 1, 2) {
+            if (x == 1) {
+                for(y, 1, 2) {
+                    sum = sum + y  // 第一次: sum = 0 + 1 + 2 = 3
+                }
+            } else {
+                sum = sum + x * 10  // 第二次: sum = 3 + 2 * 10 = 23
+            }
+        }
+        
+        sum
+    }
+    
+    // 测试break和continue
+    num(flow_control_test) {
+        num(result) { 0 }
+        
+        for(j, 1, 10) {
+            if (j == 3) {
+                continue {
+                    // 跳过3
+                }
+            }
+            if (j == 7) {
+                break {
+                    // 在7处跳出
+                }
+            }
+            result = result + j
+        }
+        
+        result  // 1 + 2 + 4 + 5 + 6 = 18
+    }
+    
+    // 测试字段依赖的复杂计算
+    num(final_score) {
+        num(multiplier) { 2 }
+        
+        if (calculated_value > 150) {
+            calculated_value + nested_result * multiplier  // 156 + 23 * 2 = 202
+        } else {
+            calculated_value + nested_result  // 156 + 23 = 179
+        }
+    }
+}

@@ -1,0 +1,40 @@
+// e7 复杂分支, 控制和循环
+
+obj("TestObject", 1) {
+num(test_value) { 5 }
+num(skip_msg) {}
+num(break_msg) {}
+
+// 测试else()语法
+str(result) {
+    if(test_value > 3) {
+        "大于3"
+    } else {
+        "小于等于3"
+    }
+}
+
+// 测试break {}和continue {}语法
+num(sum) {
+    num(total) { 0 }
+    for(i, 1, 10) {
+        if(i == 3) {
+            continue {
+                skip_msg = 1
+            }
+        }
+        if(i == 8) {
+            break {
+                break_msg = 1
+            }
+        }
+        num(total) { total + i }
+    }
+    total
+}
+
+
+str(message) { result }
+num(calculated_sum) { sum }
+num(msg_sum) { skip_msg + break_msg } // 这里有个bug, 当作用域内未声明时不会报错, 反而成了字符串
+}

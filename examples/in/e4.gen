@@ -1,0 +1,21 @@
+// e4 简单控制语句
+
+obj("ControlFlowTest", 1) {
+    num(break_test) {
+        num(result) { 0 }
+        for(i, 10) {
+            if (i == 3) {
+                continue {
+                    // 跳过3
+                }
+            }
+            if (i == 6) {
+                break {
+                    // 在6处跳出
+                }
+            }
+            result = result + i
+        }
+        result
+    }
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "class": "TestObject1",
+    "id": 1,
+    "local_var": 50,
+    "result1": 150
+  },
+  {
+    "class": "TestObject2",
+    "global_check": 100,
+    "id": 2,
+    "local_var": 25,
+    "result2": 125
+  }
+]

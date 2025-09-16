@@ -1,0 +1,23 @@
+[
+  {
+    "base": 10,
+    "block_ref": 11,
+    "chain_ref": 30,
+    "class": "DebugTest",
+    "complex_ref": 105,
+    "factor": 3,
+    "id": 1000,
+    "simple_ref": 15,
+    "temp": 10
+  },
+  {
+    "base": 10,
+    "class": "DebugTest2",
+    "id": 2000,
+    "multiplier": 2,
+    "test1": 20,
+    "test2": 30,
+    "test3": 20,
+    "test4": 12
+  }
+]

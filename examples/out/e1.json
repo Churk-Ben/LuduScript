@@ -1,0 +1,13 @@
+[
+  {
+    "a": 10,
+    "b": 20,
+    "c": "Hello",
+    "class": "Test",
+    "d": true,
+    "flag": false,
+    "id": 1,
+    "name": "LuduScript",
+    "version": 1.0
+  }
+]

@@ -1,11 +1,21 @@
-// 简单条件语句
-num(test_num) { 1 }
+// e1 简单变量声明和赋值
 
-str(result) {
-    if(test_num == 1) { "A" }
-    else() { "Other" }
-}
+num(a) { 1 }
+num(pi) { 3.14 }
+str(name) { "Ludus" }
+bool(flag) { true }
+
+num(b) {}
+str(c) {}
+bool(d) {}
 
 obj("Test", 1) {
-    str(display) { result }
+    name = "LuduScript"
+    num(version) { 1.0 }
+    flag = false
+
+    a = 10
+    b = 20
+    c = "Hello"
+    d = true
 }

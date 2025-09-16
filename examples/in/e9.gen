@@ -1,0 +1,72 @@
+// e9 字段内引用
+
+obj("DebugTest", 1000) {
+    num(base) { 10 }
+
+    // 测试1：简单字段引用
+    num(simple_ref) {
+        base + 5  // 应该是 10 + 5 = 15
+    }
+
+    // 测试2：在初始化块中引用字段
+    num(block_ref) {
+        num(temp) { base }  // 引用base字段
+        temp + 1  // 应该是 10 + 1 = 11
+    }
+
+    // 测试3：引用前面计算的字段
+    num(chain_ref) {
+        simple_ref * 2  // 应该是 15 * 2 = 30
+    }
+
+    // 测试4：复杂初始化块中引用多个字段
+    num(complex_ref) {
+        num(factor) { 3 }
+        if (base > 5) {
+            simple_ref + chain_ref * factor  // 15 + 30 * 3 = 105
+        } else {
+            base
+        }
+    }
+}
+
+obj("DebugTest2", 2000) {
+    num(base) { 10 }
+    num(multiplier) { 2 }
+
+    // 测试1：直接在条件中引用字段
+    num(test1) {
+        if (base > 5) {
+            20
+        } else {
+            10
+        }
+    }
+
+    // 测试2：在条件表达式中引用字段，在分支中使用常量
+    num(test2) {
+        if (multiplier > 1) {
+            30
+        } else {
+            15
+        }
+    }
+
+    // 测试3：在分支中引用字段
+    num(test3) {
+        if (base > 5) {
+            base + 10  // 这里引用字段
+        } else {
+            5
+        }
+    }
+
+    // 测试4：在分支中引用多个字段
+    num(test4) {
+        if (base > 5) {
+            base + multiplier  // 这里引用两个字段
+        } else {
+            1
+        }
+    }
+}

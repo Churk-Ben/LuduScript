@@ -1,0 +1,17 @@
+// e8 作用域示例
+
+// 全局变量声明
+num(global_var) { 100 }
+
+// 第一个对象 - 应该能访问全局变量
+obj("TestObject1", 1) {
+    num(local_var) { 50 }
+    num(result1) { global_var + local_var }  // 应该是 150
+}
+
+// 第二个对象 - 也应该能访问全局变量
+obj("TestObject2", 2) {
+    num(local_var) { 25 }  // 同名局部变量，不应该影响全局变量
+    num(result2) { global_var + local_var }  // 应该是 125
+    num(global_check) { global_var }  // 应该还是 100
+}

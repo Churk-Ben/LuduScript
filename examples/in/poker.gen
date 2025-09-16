@@ -1,0 +1,139 @@
+// 生成一副54张扑克牌的LuduScript脚本
+// 包含4种花色各13张牌 + 2张王牌
+
+// 花色定义：1=黑桃(Spades), 2=红心(Hearts), 3=梅花(Clubs), 4=方块(Diamonds)
+// 点数定义：1=A, 2-10=数字牌, 11=J, 12=Q, 13=K
+// 王牌：小王=14, 大王=15
+
+num(card_id) { 1 }
+
+// 生成黑桃(Spades)
+for(rank, 1, 13) {
+    obj("Card", card_id) {
+        str(suit) { "Spades" }
+        num(suit_value) { 1 }
+        num(rank_value) { rank }
+        str(rank_name) {
+            if(rank == 1) {
+                "A"
+            } elif(rank == 11) {
+                "J"
+            } elif(rank == 12) {
+                "Q"
+            } elif(rank == 13) {
+                "K"
+            } else {
+                str(temp) {}
+                temp = rank
+                temp
+            }
+        }
+        str(display_name) {
+            rank_name + " of " + suit
+        }
+    }
+    card_id = card_id + 1
+}
+
+// 生成红心(Hearts)
+for(rank, 1, 13) {
+    obj("Card", card_id) {
+        str(suit) { "Hearts" }
+        num(suit_value) { 2 }
+        num(rank_value) { rank }
+        str(rank_name) {
+            if(rank == 1) {
+                "A"
+            } elif(rank == 11) {
+                "J"
+            } elif(rank == 12) {
+                "Q"
+            } elif(rank == 13) {
+                "K"
+            } else {
+                str(temp) {}
+                temp = rank
+                temp
+            }
+        }
+        str(display_name) {
+            rank_name + " of " + suit
+        }
+    }
+    card_id = card_id + 1
+}
+
+// 生成梅花(Clubs)
+for(rank, 1, 13) {
+    obj("Card", card_id) {
+        str(suit) { "Clubs" }
+        num(suit_value) { 3 }
+        num(rank_value) { rank }
+        str(rank_name) {
+            if(rank == 1) {
+                "A"
+            } elif(rank == 11) {
+                "J"
+            } elif(rank == 12) {
+                "Q"
+            } elif(rank == 13) {
+                "K"
+            } else {
+                str(temp) {}
+                temp = rank
+                temp
+            }
+        }
+        str(display_name) {
+            rank_name + " of " + suit
+        }
+    }
+    card_id = card_id + 1
+}
+
+// 生成方块(Diamonds)
+for(rank, 1, 13) {
+    obj("Card", card_id) {
+        str(suit) { "Diamonds" }
+        num(suit_value) { 4 }
+        num(rank_value) { rank }
+        str(rank_name) {
+            if(rank == 1) {
+                "A"
+            } elif(rank == 11) {
+                "J"
+            } elif(rank == 12) {
+                "Q"
+            } elif(rank == 13) {
+                "K"
+            } else {
+                str(temp) {}
+                temp = rank
+                temp
+            }
+        }
+        str(display_name) {
+            rank_name + " of " + suit
+        }
+    }
+    card_id = card_id + 1
+}
+
+// 生成小王(Black Joker)
+obj("Card", card_id) {
+    str(suit) { "Joker" }
+    num(suit_value) { 0 }
+    num(rank_value) { 14 }
+    str(rank_name) { "Black Joker" }
+    str(display_name) { "Black Joker" }
+}
+card_id = card_id + 1
+
+// 生成大王(Red Joker)
+obj("Card", card_id) {
+    str(suit) { "Joker" }
+    num(suit_value) { 0 }
+    num(rank_value) { 15 }
+    str(rank_name) { "Red Joker" }
+    str(display_name) { "Red Joker" }
+}

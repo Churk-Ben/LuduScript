@@ -57,7 +57,7 @@ Temporary/
 output/
 
 # Script generated files
-scripts/*.gen
+scripts/
 
 # Backup and temporary files
 *~
@@ -66,5 +66,3 @@ scripts/*.gen
 
 # Old executables
 old/
-
-luduscript-1.0.0/

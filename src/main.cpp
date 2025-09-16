@@ -11,13 +11,13 @@ int main_inner(const std::string &source, bool printPretty, const std::string &o
     {
         Parser parser(source);
         auto program = parser.parseProgram();
-        
+
         Interpreter interpreter;
         interpreter.execute(program.get());
-        
+
         // Generate output string
         std::string jsonOutput = interpreter.getOutput(printPretty);
-        
+
         // Output to file or console
         if (!outputFile.empty())
         {
@@ -50,30 +50,30 @@ int main(int argc, char **argv)
         std::cerr << "Usage: " << argv[0] << " <script.file> [--pretty] [--output <file.json>]\n";
         return 1;
     }
-    
+
     bool pretty = false;
     std::string outputFile = "";
     std::string path = argv[1];
-    
+
     // Parse command line arguments
     for (int i = 2; i < argc; i++)
     {
         std::string arg = argv[i];
-        if (arg == "--pretty")
+        if (arg == "--pretty" || arg == "-p")
         {
             pretty = true;
         }
-        else if (arg == "--output" && i + 1 < argc)
+        else if ((arg == "--output" || arg == "-o") && i + 1 < argc)
         {
             outputFile = argv[i + 1];
-            i++; // Skip next argument as it's the filename
+            i++;
         }
         else if (arg.substr(0, 9) == "--output=")
         {
-            outputFile = arg.substr(9); // Extract filename after "--output="
+            outputFile = arg.substr(9);
         }
     }
-    
+
     std::ifstream ifs(path);
     if (!ifs)
     {

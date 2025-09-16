@@ -81,8 +81,6 @@ StmtPtr Parser::parseStmt()
     {
         int line = cur.line;
         consume();
-        expect(TokenKind::LPAREN, "Expected '(' after 'break'");
-        expect(TokenKind::RPAREN, "Expected ')' after 'break('");
         auto body = parseBlock();
         return std::make_unique<BreakStmt>(std::move(body), line);
     }
@@ -90,8 +88,6 @@ StmtPtr Parser::parseStmt()
     {
         int line = cur.line;
         consume();
-        expect(TokenKind::LPAREN, "Expected '(' after 'continue'");
-        expect(TokenKind::RPAREN, "Expected ')' after 'continue('");
         auto body = parseBlock();
         return std::make_unique<ContinueStmt>(std::move(body), line);
     }
@@ -149,8 +145,6 @@ StmtPtr Parser::parseIf()
     if (cur.kind == TokenKind::KW_ELSE)
     {
         consume(); // consume 'else'
-        expect(TokenKind::LPAREN, "Expected '(' after 'else'");
-        expect(TokenKind::RPAREN, "Expected ')' after 'else('");
         ifStmt->elseBody = parseBlock();
     }
     

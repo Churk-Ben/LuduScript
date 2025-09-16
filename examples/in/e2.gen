@@ -1,0 +1,21 @@
+// e2 简单分支语句
+
+num(a) { 1 }
+num(b) { 2 }
+num(c) {   }
+
+if(a == 1) {
+    obj("Test", 1) {
+        c = b - a
+    }
+}
+elif(a == 2) {
+    obj("Test", 2) {
+        c = a * b
+    }
+}
+else {
+    obj("Test", 3) {
+        c = a + b
+    }
+}

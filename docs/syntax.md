@@ -16,14 +16,14 @@
     分支语句:
         if(condExpr) {}
         elif(condExpr) {}
-        else {}               // 不可省略括号, 但是括号里不能传参
+        else {}    
     循环语句:
         for(iterVarName, countExpr) {}
         for(iterVarName, start, end) {}
         for(iterVarName, start, end, step) {}
     流程语句:
-        continue {}           // 不可省略括号, 但是括号里不能传参
-        break {}              // 不可省略括号, 但是括号里不能传参
+        continue {}
+        break {}   
 
 输入输出语句:
     // 暂不支持

@@ -1,0 +1,15 @@
+[
+  {
+    "break_msg": 1,
+    "calculated_sum": 25,
+    "class": "TestObject",
+    "id": 1,
+    "message": "大于3",
+    "msg_sum": 2,
+    "result": "大于3",
+    "skip_msg": 1,
+    "sum": 25,
+    "test_value": 5,
+    "total": 25
+  }
+]

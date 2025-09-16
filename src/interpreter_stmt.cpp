@@ -20,22 +20,58 @@ void Interpreter::execStmt(Stmt *s)
     if (auto as = dynamic_cast<AssignStmt *>(s))
     {
         Value v = evalExpr(as->expr.get());
-        // If inside object, write to object field, else to var
-        if (env.current_object.has_value())
+        
+        // Check if variable exists in any outer scope first
+        bool found = false;
+        for (int i = int(env.stack.size()) - 1; i >= 0; --i)
         {
-            if (v.type == Value::Type::NUM && v.isInteger)
-                env.current_object->operator[](as->name) = json(static_cast<ll>(v.nval));
-            else if (v.type == Value::Type::NUM)
-                env.current_object->operator[](as->name) = json(v.nval);
-            else if (v.type == Value::Type::BOOL)
-                env.current_object->operator[](as->name) = json(v.bval);
-            else
-                env.current_object->operator[](as->name) = json(v.sval);
-            env.declared_fields.insert(as->name);
+            auto it = env.stack[i].find(as->name);
+            if (it != env.stack[i].end())
+            {
+                // Update existing variable in its original scope
+                env.stack[i][as->name] = v;
+                found = true;
+                break;
+            }
         }
-        else
+        
+        if (!found)
         {
-            env.setVar(as->name, v);
+            // Variable doesn't exist in stack, check if inside object
+            if (env.current_object.has_value())
+            {
+                // Check if it's already declared as object field
+                if (env.declared_fields.count(as->name) > 0 || env.current_object->contains(as->name))
+                {
+                    // Update existing object field
+                    if (v.type == Value::Type::NUM && v.isInteger)
+                        env.current_object->operator[](as->name) = json(static_cast<ll>(v.nval));
+                    else if (v.type == Value::Type::NUM)
+                        env.current_object->operator[](as->name) = json(v.nval);
+                    else if (v.type == Value::Type::BOOL)
+                        env.current_object->operator[](as->name) = json(v.bval);
+                    else
+                        env.current_object->operator[](as->name) = json(v.sval);
+                }
+                else
+                {
+                    // Create new object field
+                    if (v.type == Value::Type::NUM && v.isInteger)
+                        env.current_object->operator[](as->name) = json(static_cast<ll>(v.nval));
+                    else if (v.type == Value::Type::NUM)
+                        env.current_object->operator[](as->name) = json(v.nval);
+                    else if (v.type == Value::Type::BOOL)
+                        env.current_object->operator[](as->name) = json(v.bval);
+                    else
+                        env.current_object->operator[](as->name) = json(v.sval);
+                    env.declared_fields.insert(as->name);
+                }
+            }
+            else
+            {
+                // Create in current scope
+                env.setVar(as->name, v);
+            }
         }
         return;
     }
@@ -236,7 +272,9 @@ void Interpreter::execStmt(Stmt *s)
                 env.setVar(fs->iter, Value::makeInt(it));
                 try
                 {
-                    execBlock(fs->body);
+                    // Execute statements directly without creating additional scope
+                    for (auto &st : fs->body)
+                        execStmt(st.get());
                 }
                 catch (const BreakException&)
                 {
@@ -260,7 +298,9 @@ void Interpreter::execStmt(Stmt *s)
                 env.setVar(fs->iter, Value::makeInt(it));
                 try
                 {
-                    execBlock(fs->body);
+                    // Execute statements directly without creating additional scope
+                    for (auto &st : fs->body)
+                        execStmt(st.get());
                 }
                 catch (const BreakException&)
                 {

@@ -1,4 +1,4 @@
-// 简单循环语句
+// e3 简单循环语句
 
 num(sum) { 0 }
 
@@ -25,3 +25,4 @@ obj("BreakContinueTest", 1) {
     }
     num(sum_3) { sum }
 }
+

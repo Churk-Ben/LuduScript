@@ -1,0 +1,14 @@
+[
+  {
+    "base_value": 5,
+    "class": "ComplexInitTest",
+    "complex_calculation": 48,
+    "factor": 2,
+    "field_dependent": 58,
+    "id": 3001,
+    "inner_sum": 3,
+    "nested_complex": 4,
+    "outer_sum": 4,
+    "temp_result": 16
+  }
+]

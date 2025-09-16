@@ -1,0 +1,524 @@
+[
+  {
+    "class": "Card",
+    "display_name": "A of Spades",
+    "id": 1,
+    "rank_name": "A",
+    "rank_value": 1,
+    "suit": "Spades",
+    "suit_value": 1
+  },
+  {
+    "class": "Card",
+    "display_name": "2 of Spades",
+    "id": 2,
+    "rank_name": 2,
+    "rank_value": 2,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "3 of Spades",
+    "id": 3,
+    "rank_name": 3,
+    "rank_value": 3,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "4 of Spades",
+    "id": 4,
+    "rank_name": 4,
+    "rank_value": 4,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "5 of Spades",
+    "id": 5,
+    "rank_name": 5,
+    "rank_value": 5,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 5
+  },
+  {
+    "class": "Card",
+    "display_name": "6 of Spades",
+    "id": 6,
+    "rank_name": 6,
+    "rank_value": 6,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 6
+  },
+  {
+    "class": "Card",
+    "display_name": "7 of Spades",
+    "id": 7,
+    "rank_name": 7,
+    "rank_value": 7,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 7
+  },
+  {
+    "class": "Card",
+    "display_name": "8 of Spades",
+    "id": 8,
+    "rank_name": 8,
+    "rank_value": 8,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 8
+  },
+  {
+    "class": "Card",
+    "display_name": "9 of Spades",
+    "id": 9,
+    "rank_name": 9,
+    "rank_value": 9,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 9
+  },
+  {
+    "class": "Card",
+    "display_name": "10 of Spades",
+    "id": 10,
+    "rank_name": 10,
+    "rank_value": 10,
+    "suit": "Spades",
+    "suit_value": 1,
+    "temp": 10
+  },
+  {
+    "class": "Card",
+    "display_name": "J of Spades",
+    "id": 11,
+    "rank_name": "J",
+    "rank_value": 11,
+    "suit": "Spades",
+    "suit_value": 1
+  },
+  {
+    "class": "Card",
+    "display_name": "Q of Spades",
+    "id": 12,
+    "rank_name": "Q",
+    "rank_value": 12,
+    "suit": "Spades",
+    "suit_value": 1
+  },
+  {
+    "class": "Card",
+    "display_name": "K of Spades",
+    "id": 13,
+    "rank_name": "K",
+    "rank_value": 13,
+    "suit": "Spades",
+    "suit_value": 1
+  },
+  {
+    "class": "Card",
+    "display_name": "A of Hearts",
+    "id": 14,
+    "rank_name": "A",
+    "rank_value": 1,
+    "suit": "Hearts",
+    "suit_value": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "2 of Hearts",
+    "id": 15,
+    "rank_name": 2,
+    "rank_value": 2,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "3 of Hearts",
+    "id": 16,
+    "rank_name": 3,
+    "rank_value": 3,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "4 of Hearts",
+    "id": 17,
+    "rank_name": 4,
+    "rank_value": 4,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "5 of Hearts",
+    "id": 18,
+    "rank_name": 5,
+    "rank_value": 5,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 5
+  },
+  {
+    "class": "Card",
+    "display_name": "6 of Hearts",
+    "id": 19,
+    "rank_name": 6,
+    "rank_value": 6,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 6
+  },
+  {
+    "class": "Card",
+    "display_name": "7 of Hearts",
+    "id": 20,
+    "rank_name": 7,
+    "rank_value": 7,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 7
+  },
+  {
+    "class": "Card",
+    "display_name": "8 of Hearts",
+    "id": 21,
+    "rank_name": 8,
+    "rank_value": 8,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 8
+  },
+  {
+    "class": "Card",
+    "display_name": "9 of Hearts",
+    "id": 22,
+    "rank_name": 9,
+    "rank_value": 9,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 9
+  },
+  {
+    "class": "Card",
+    "display_name": "10 of Hearts",
+    "id": 23,
+    "rank_name": 10,
+    "rank_value": 10,
+    "suit": "Hearts",
+    "suit_value": 2,
+    "temp": 10
+  },
+  {
+    "class": "Card",
+    "display_name": "J of Hearts",
+    "id": 24,
+    "rank_name": "J",
+    "rank_value": 11,
+    "suit": "Hearts",
+    "suit_value": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "Q of Hearts",
+    "id": 25,
+    "rank_name": "Q",
+    "rank_value": 12,
+    "suit": "Hearts",
+    "suit_value": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "K of Hearts",
+    "id": 26,
+    "rank_name": "K",
+    "rank_value": 13,
+    "suit": "Hearts",
+    "suit_value": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "A of Clubs",
+    "id": 27,
+    "rank_name": "A",
+    "rank_value": 1,
+    "suit": "Clubs",
+    "suit_value": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "2 of Clubs",
+    "id": 28,
+    "rank_name": 2,
+    "rank_value": 2,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "3 of Clubs",
+    "id": 29,
+    "rank_name": 3,
+    "rank_value": 3,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "4 of Clubs",
+    "id": 30,
+    "rank_name": 4,
+    "rank_value": 4,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "5 of Clubs",
+    "id": 31,
+    "rank_name": 5,
+    "rank_value": 5,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 5
+  },
+  {
+    "class": "Card",
+    "display_name": "6 of Clubs",
+    "id": 32,
+    "rank_name": 6,
+    "rank_value": 6,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 6
+  },
+  {
+    "class": "Card",
+    "display_name": "7 of Clubs",
+    "id": 33,
+    "rank_name": 7,
+    "rank_value": 7,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 7
+  },
+  {
+    "class": "Card",
+    "display_name": "8 of Clubs",
+    "id": 34,
+    "rank_name": 8,
+    "rank_value": 8,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 8
+  },
+  {
+    "class": "Card",
+    "display_name": "9 of Clubs",
+    "id": 35,
+    "rank_name": 9,
+    "rank_value": 9,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 9
+  },
+  {
+    "class": "Card",
+    "display_name": "10 of Clubs",
+    "id": 36,
+    "rank_name": 10,
+    "rank_value": 10,
+    "suit": "Clubs",
+    "suit_value": 3,
+    "temp": 10
+  },
+  {
+    "class": "Card",
+    "display_name": "J of Clubs",
+    "id": 37,
+    "rank_name": "J",
+    "rank_value": 11,
+    "suit": "Clubs",
+    "suit_value": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "Q of Clubs",
+    "id": 38,
+    "rank_name": "Q",
+    "rank_value": 12,
+    "suit": "Clubs",
+    "suit_value": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "K of Clubs",
+    "id": 39,
+    "rank_name": "K",
+    "rank_value": 13,
+    "suit": "Clubs",
+    "suit_value": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "A of Diamonds",
+    "id": 40,
+    "rank_name": "A",
+    "rank_value": 1,
+    "suit": "Diamonds",
+    "suit_value": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "2 of Diamonds",
+    "id": 41,
+    "rank_name": 2,
+    "rank_value": 2,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 2
+  },
+  {
+    "class": "Card",
+    "display_name": "3 of Diamonds",
+    "id": 42,
+    "rank_name": 3,
+    "rank_value": 3,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 3
+  },
+  {
+    "class": "Card",
+    "display_name": "4 of Diamonds",
+    "id": 43,
+    "rank_name": 4,
+    "rank_value": 4,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "5 of Diamonds",
+    "id": 44,
+    "rank_name": 5,
+    "rank_value": 5,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 5
+  },
+  {
+    "class": "Card",
+    "display_name": "6 of Diamonds",
+    "id": 45,
+    "rank_name": 6,
+    "rank_value": 6,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 6
+  },
+  {
+    "class": "Card",
+    "display_name": "7 of Diamonds",
+    "id": 46,
+    "rank_name": 7,
+    "rank_value": 7,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 7
+  },
+  {
+    "class": "Card",
+    "display_name": "8 of Diamonds",
+    "id": 47,
+    "rank_name": 8,
+    "rank_value": 8,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 8
+  },
+  {
+    "class": "Card",
+    "display_name": "9 of Diamonds",
+    "id": 48,
+    "rank_name": 9,
+    "rank_value": 9,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 9
+  },
+  {
+    "class": "Card",
+    "display_name": "10 of Diamonds",
+    "id": 49,
+    "rank_name": 10,
+    "rank_value": 10,
+    "suit": "Diamonds",
+    "suit_value": 4,
+    "temp": 10
+  },
+  {
+    "class": "Card",
+    "display_name": "J of Diamonds",
+    "id": 50,
+    "rank_name": "J",
+    "rank_value": 11,
+    "suit": "Diamonds",
+    "suit_value": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "Q of Diamonds",
+    "id": 51,
+    "rank_name": "Q",
+    "rank_value": 12,
+    "suit": "Diamonds",
+    "suit_value": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "K of Diamonds",
+    "id": 52,
+    "rank_name": "K",
+    "rank_value": 13,
+    "suit": "Diamonds",
+    "suit_value": 4
+  },
+  {
+    "class": "Card",
+    "display_name": "Black Joker",
+    "id": 53,
+    "rank_name": "Black Joker",
+    "rank_value": 14,
+    "suit": "Joker",
+    "suit_value": 0
+  },
+  {
+    "class": "Card",
+    "display_name": "Red Joker",
+    "id": 54,
+    "rank_name": "Red Joker",
+    "rank_value": 15,
+    "suit": "Joker",
+    "suit_value": 0
+  }
+]

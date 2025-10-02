@@ -27,9 +27,6 @@ file(GLOB_RECURSE SOURCES
     "src/*.h"
 )
 
-# 排除legacy文件
-list(FILTER SOURCES EXCLUDE REGEX ".*legacy.*")
-
 # 收集头文件
 file(GLOB_RECURSE HEADERS 
     "include/*.h"
@@ -96,6 +93,6 @@ enable_testing()
 
 # 简单的功能测试
 add_test(NAME test_poker_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.gen --pretty --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
+    COMMAND luduscript ${CMAKE_SOURCE_DIR}/examples/in/poker.gen --pretty --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

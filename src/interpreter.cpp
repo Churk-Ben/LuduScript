@@ -2,6 +2,11 @@
 #include <stdexcept>
 #include <algorithm>
 
+void use(Expr e)
+{
+    (void)e;
+}
+
 // Value implementation
 Value Value::makeInt(ll i)
 {
@@ -183,7 +188,7 @@ Value Interpreter::evalLiteral(LiteralExpr *lit)
         return Value::makeStr(lit->sval);
     if (lit->kind == LiteralExpr::Kind::BOOL)
         return Value::makeBool(lit->bval);
-    
+
     // 默认返回值，不应该到达这里
     throw std::runtime_error("Unknown literal kind");
 }
@@ -194,14 +199,14 @@ Value Interpreter::evalIdent(IdentExpr *id)
     auto val = env.getVar(id->name);
     if (val.has_value())
         return *val;
-    
+
     // If in object context, try to get field value from current object
     if (env.current_object.has_value() && env.declared_fields.find(id->name) != env.declared_fields.end())
     {
-        auto& obj = *env.current_object;
+        auto &obj = *env.current_object;
         if (obj.contains(id->name))
         {
-            auto& field = obj[id->name];
+            auto &field = obj[id->name];
             if (field.is_number())
             {
                 double val = field.get<double>();
@@ -216,13 +221,13 @@ Value Interpreter::evalIdent(IdentExpr *id)
                 return Value::makeBool(field.get<bool>());
         }
     }
-    
+
     // If in object context and variable not found, treat as field name
     if (env.current_object.has_value() && env.declared_fields.find(id->name) == env.declared_fields.end())
     {
         return Value::makeStr(id->name);
     }
-    
+
     throw std::runtime_error("Undefined variable: " + id->name);
 }
 
@@ -241,7 +246,7 @@ Value Interpreter::evalBinary(BinaryExpr *b)
     Value L = evalExpr(b->lhs.get());
     Value R = evalExpr(b->rhs.get());
     const std::string &op = b->op;
-    
+
     if (op == "+")
     {
         // If either is string, do string concat
@@ -328,18 +333,20 @@ Value Interpreter::evalBinary(BinaryExpr *b)
         return Value::makeBool(L.toBool() && R.toBool());
     if (op == "||")
         return Value::makeBool(L.toBool() || R.toBool());
-    
+
     throw std::runtime_error("Unknown binary operator: " + op);
 }
 
 Value Interpreter::evalCall(CallExpr *c)
 {
-    // For now, we don't support function calls in this simple interpreter
+    // 目前解释器还不支持函数调用
+    use(*c);
     throw std::runtime_error("Function calls not supported");
 }
 
 Value Interpreter::evalAccess(AccessExpr *a)
 {
-    // For now, we don't support member access in this simple interpreter
+    // 目前解释器还不支持成员访问
+    use(*a);
     throw std::runtime_error("Member access not supported");
 }

@@ -91,15 +91,15 @@ StmtPtr Parser::parseStmt()
         auto body = parseBlock();
         return std::make_unique<ContinueStmt>(std::move(body), line);
     }
-    
+
     // Check for assignment: IDENT = expr
     if (cur.kind == TokenKind::IDENT)
     {
         // 需要前瞻来判断是否为赋值语句
         // 创建临时词法分析器来检查下一个token
-        Lexer tempLex = lex; // 复制当前词法分析器状态
+        Lexer tempLex = lex;                   // 复制当前词法分析器状态
         Token tempToken = tempLex.nextToken(); // 获取下一个token
-        
+
         if (tempToken.kind == TokenKind::ASSIGN)
         {
             // 这是赋值语句
@@ -112,7 +112,7 @@ StmtPtr Parser::parseStmt()
             return std::make_unique<AssignStmt>(name, std::move(expr), line);
         }
     }
-    
+
     // Expression statement
     auto expr = parseExpr();
     match(TokenKind::SEMI); // Optional semicolon
@@ -126,10 +126,10 @@ StmtPtr Parser::parseIf()
     expect(TokenKind::LPAREN, "Expected '(' after 'if'");
     auto cond = parseExpr();
     expect(TokenKind::RPAREN, "Expected ')' after if condition");
-    
+
     auto ifStmt = std::make_unique<IfStmt>(std::move(cond), line);
     ifStmt->thenBody = parseBlock();
-    
+
     // Handle elif clauses
     while (cur.kind == TokenKind::KW_ELIF)
     {
@@ -140,14 +140,14 @@ StmtPtr Parser::parseIf()
         auto elifBody = parseBlock();
         ifStmt->elifs.emplace_back(std::move(elifCond), std::move(elifBody));
     }
-    
+
     // Handle else clause
     if (cur.kind == TokenKind::KW_ELSE)
     {
         consume(); // consume 'else'
         ifStmt->elseBody = parseBlock();
     }
-    
+
     return ifStmt;
 }
 
@@ -156,16 +156,16 @@ StmtPtr Parser::parseFor()
     int line = cur.line;
     expect(TokenKind::KW_FOR, "Expected 'for'");
     expect(TokenKind::LPAREN, "Expected '(' after 'for'");
-    
+
     if (cur.kind != TokenKind::IDENT)
         error("Expected iterator variable name");
     std::string iter = cur.text;
     consume();
-    
+
     expect(TokenKind::COMMA, "Expected ',' after iterator variable");
-    
+
     auto forStmt = std::make_unique<ForStmt>(iter, line);
-    
+
     // Parse arguments (1-3 expressions)
     forStmt->args.push_back(parseExpr());
     if (match(TokenKind::COMMA))
@@ -176,10 +176,10 @@ StmtPtr Parser::parseFor()
             forStmt->args.push_back(parseExpr());
         }
     }
-    
+
     expect(TokenKind::RPAREN, "Expected ')' after for arguments");
     forStmt->body = parseBlock();
-    
+
     return forStmt;
 }
 
@@ -188,19 +188,19 @@ StmtPtr Parser::parseObj()
     int line = cur.line;
     expect(TokenKind::KW_OBJ, "Expected 'obj'");
     expect(TokenKind::LPAREN, "Expected '(' after 'obj'");
-    
+
     if (cur.kind != TokenKind::STRING)
         error("Expected class name string");
     std::string className = cur.text;
     consume();
-    
+
     expect(TokenKind::COMMA, "Expected ',' after class name");
     auto idExpr = parseExpr();
     expect(TokenKind::RPAREN, "Expected ')' after object id");
-    
+
     auto objStmt = std::make_unique<ObjStmt>(className, std::move(idExpr), line);
     objStmt->body = parseBlock();
-    
+
     return objStmt;
 }
 
@@ -209,19 +209,19 @@ StmtPtr Parser::parseDecl()
     int line = cur.line;
     std::string type = cur.text;
     consume(); // consume type keyword
-    
+
     expect(TokenKind::LPAREN, "Expected '(' after type");
-    
+
     if (cur.kind != TokenKind::IDENT)
         error("Expected variable name");
     std::string name = cur.text;
     consume();
-    
+
     expect(TokenKind::RPAREN, "Expected ')' after variable name");
-    
+
     std::optional<ExprPtr> init;
     std::vector<StmtPtr> initBlock;
-    
+
     if (match(TokenKind::LBRACE))
     {
         // Check if it's an empty initializer block (default value)
@@ -275,12 +275,12 @@ std::vector<StmtPtr> Parser::parseBlock()
 {
     expect(TokenKind::LBRACE, "Expected '{'");
     std::vector<StmtPtr> stmts;
-    
+
     while (cur.kind != TokenKind::RBRACE && cur.kind != TokenKind::END)
     {
         stmts.push_back(parseStmt());
     }
-    
+
     expect(TokenKind::RBRACE, "Expected '}'");
     return stmts;
 }

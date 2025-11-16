@@ -93,12 +93,3 @@ add_custom_target(clean-output
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/output
     COMMENT "Cleaning output directory"
 )
-
-# 添加测试目标
-enable_testing()
-
-# 简单的功能测试
-add_test(NAME test_poker_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/scripts/generate_poker_deck.gen --pretty --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
-)

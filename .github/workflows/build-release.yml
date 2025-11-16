@@ -3,13 +3,13 @@ name: LuduScript Auto Release
 on:
   push:
     tags:
-      - 'v*'  # 当推送 v1.0.0, v1.2.3 等标签时触发
+      - 'v*'
     branches:
       - main
       - master
 
 permissions:
-  contents: write  # 需要写入权限创建 release
+  contents: write
 
 env:
   PROJECT_NAME: LuduScript
@@ -24,25 +24,30 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact: luduscript-linux-amd64.tar.gz
-            triplet: x64-linux
           - os: windows-latest
             artifact: luduscript-windows-amd64.zip
-            triplet: x64-windows
           - os: macos-latest
             artifact: luduscript-macos-amd64.tar.gz
-            triplet: x64-osx
 
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取完整历史用于版本提取
+          fetch-depth: 0
 
       - name: 提取版本号
         id: version
         shell: bash
         run: |
-          VERSION=$(grep -oP 'project\(LuduScript VERSION \K[0-9.]+' CMakeLists.txt)
+          # 跨平台兼容的版本提取（适用于所有操作系统）
+          VERSION=$(sed -n 's/.*project(LuduScript VERSION \([0-9][0-9.]*\).*/\1/p' CMakeLists.txt)
+          
+          # 验证版本号
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not extract version from CMakeLists.txt"
+            exit 1
+          fi
+          
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Project version: $VERSION"
 
@@ -95,21 +100,11 @@ jobs:
           echo "Creating package: $PACKAGE_NAME"
           
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            # Windows: 使用 zip
-            cd install
-            7z a -r ../$PACKAGE_NAME .
-            cd ..
+            # Windows: 使用 PowerShell 压缩（更可靠）
+            Compress-Archive -Path "install\*" -DestinationPath "$PACKAGE_NAME"
           else
             # Linux/macOS: 使用 tar.gz
             tar -czf $PACKAGE_NAME -C install .
-          fi
-          
-          # 验证包内容
-          echo "Package contents:"
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            7z l $PACKAGE_NAME | head -20
-          else
-            tar -tzf $PACKAGE_NAME | head -20
           fi
           
           echo "artifact=$PACKAGE_NAME" >> $GITHUB_OUTPUT
@@ -133,9 +128,17 @@ jobs:
 
       - name: 提取版本号
         id: version
+        shell: bash
         run: |
-          VERSION=$(grep -oP 'project\(LuduScript VERSION \K[0-9.]+' CMakeLists.txt)
+          VERSION=$(sed -n 's/.*project(LuduScript VERSION \([0-9][0-9.]*\).*/\1/p' CMakeLists.txt)
+          
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not extract version from CMakeLists.txt"
+            exit 1
+          fi
+          
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Project version: $VERSION"
 
       - name: 下载所有构建产物
         uses: actions/download-artifact@v4
@@ -146,9 +149,9 @@ jobs:
         run: |
           ls -la artifacts/
           # 将文件移动到根目录以便上传
-          find artifacts/ -type f -name "*.tar.gz" -o -name "*.zip" | while read file; do
+          find artifacts/ -type f \( -name "*.tar.gz" -o -name "*.zip" \) | while read file; do
             mv "$file" .
-            basename "$file"
+            echo "Prepared: $(basename "$file")"
           done
           ls -la *.tar.gz *.zip 2>/dev/null || true
 
@@ -156,7 +159,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          name:  LuduScript ${{ github.ref_name }} Release
+          name: LuduScript ${{ github.ref_name }} Release
           body: |
             ## LuduScript ${{ steps.version.outputs.version }} 🎲
             
@@ -174,11 +177,6 @@ jobs:
             ```bash
             luduscript scripts/generate_poker_deck.gen --pretty --output poker_deck.json
             ```
-            
-            ### 包含内容
-            - 可执行文件 (`bin/luduscript`)
-            - 脚本示例 (`share/luduscript/scripts/`)
-            - 使用示例 (`share/luduscript/examples/`)
             
             ### 平台支持
             - ✅ Linux (AMD64)

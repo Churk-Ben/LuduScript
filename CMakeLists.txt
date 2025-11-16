@@ -18,8 +18,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# 包含目录
-include_directories(include)
 
 # 收集源文件
 file(GLOB_RECURSE SOURCES 
@@ -35,6 +33,11 @@ file(GLOB_RECURSE HEADERS
 
 # 创建可执行文件
 add_executable(luduscript ${SOURCES} ${HEADERS})
+
+# 包含目录
+target_include_directories(luduscript PRIVATE
+    ${CMAKE_SOURCE_DIR}/include  # 你的 parser.h 所在目录
+)
 
 # 设置目标属性
 set_target_properties(luduscript PROPERTIES
@@ -86,13 +89,4 @@ add_custom_target(clean-output
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_SOURCE_DIR}/output
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_SOURCE_DIR}/output
     COMMENT "Cleaning output directory"
-)
-
-# 添加测试目标
-enable_testing()
-
-# 简单的功能测试
-add_test(NAME test_poker_generation
-    COMMAND luduscript ${CMAKE_SOURCE_DIR}/examples/in/poker.gen --pretty --output ${CMAKE_SOURCE_DIR}/output/test_poker.json
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )

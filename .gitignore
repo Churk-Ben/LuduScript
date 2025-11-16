@@ -66,3 +66,8 @@ scripts/
 
 # Old executables
 old/
+
+luduscript-1.0.0/
+cmake-build-debug/
+.idea/
+.vscode/

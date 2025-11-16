@@ -67,6 +67,9 @@ make -j$(nproc)
 
 ## 语法示例
 
+> test
+
+
 见 [语法规范](docs/syntax.md)
 
 ## 项目结构

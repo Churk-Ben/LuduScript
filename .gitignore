@@ -57,7 +57,7 @@ Temporary/
 output/
 
 # Script generated files
-scripts/*.gen
+scripts/
 
 # Backup and temporary files
 *~

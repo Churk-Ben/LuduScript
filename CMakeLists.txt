@@ -25,9 +25,6 @@ file(GLOB_RECURSE SOURCES
     "src/*.h"
 )
 
-# 排除legacy文件
-list(FILTER SOURCES EXCLUDE REGEX ".*legacy.*")
-
 # 收集头文件
 file(GLOB_RECURSE HEADERS 
     "include/*.h"

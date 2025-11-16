@@ -24,10 +24,13 @@ jobs:
         include:
           - os: ubuntu-latest
             artifact: luduscript-linux-amd64.tar.gz
+            shell: bash
           - os: windows-latest
             artifact: luduscript-windows-amd64.zip
+            shell: powershell  # 关键：在 Windows 上使用 PowerShell
           - os: macos-latest
             artifact: luduscript-macos-amd64.tar.gz
+            shell: bash
 
     steps:
       - name: 检出代码
@@ -39,10 +42,8 @@ jobs:
         id: version
         shell: bash
         run: |
-          # 跨平台兼容的版本提取（适用于所有操作系统）
           VERSION=$(sed -n 's/.*project(LuduScript VERSION \([0-9][0-9.]*\).*/\1/p' CMakeLists.txt)
           
-          # 验证版本号
           if [ -z "$VERSION" ]; then
             echo "Error: Could not extract version from CMakeLists.txt"
             exit 1
@@ -91,23 +92,32 @@ jobs:
         shell: bash
         run: cmake --install build
 
-      # 创建发布包
+      # 创建发布包 - 使用平台特定的 shell 和打包方式
       - name: 打包
         id: package
-        shell: bash
+        shell: ${{ matrix.shell }}
         run: |
-          PACKAGE_NAME=${{ matrix.artifact }}
-          echo "Creating package: $PACKAGE_NAME"
+          $PACKAGE_NAME = "${{ matrix.artifact }}"
+          Write-Host "Creating package: $PACKAGE_NAME"
           
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            # Windows: 使用 PowerShell 压缩（更可靠）
-            Compress-Archive -Path "install\*" -DestinationPath "$PACKAGE_NAME"
-          else
-            # Linux/macOS: 使用 tar.gz
+          if ("${{ runner.os }}" -eq "Windows") {
+            # Windows: 使用 Compress-Archive
+            Compress-Archive -Path "install\*" -DestinationPath $PACKAGE_NAME
+          } else {
+            # Linux/macOS: 使用 tar
             tar -czf $PACKAGE_NAME -C install .
-          fi
+          }
           
-          echo "artifact=$PACKAGE_NAME" >> $GITHUB_OUTPUT
+          # 验证包是否创建成功
+          if (Test-Path $PACKAGE_NAME) {
+            $size = (Get-Item $PACKAGE_NAME).Length
+            Write-Host "Package created successfully: $($size) bytes"
+          } else {
+            Write-Host "Error: Package not created!"
+            exit 1
+          }
+          
+          echo "artifact=$PACKAGE_NAME" >> $env:GITHUB_OUTPUT
 
       # 上传构建产物
       - name: 上传构建产物

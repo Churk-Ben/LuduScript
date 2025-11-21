@@ -1,0 +1,130 @@
+[
+  {
+    "ability": "夜晚选择目标进行袭击",
+    "class": "RoleCard",
+    "display_name": "狼人 1",
+    "has_night_action": true,
+    "id": 1,
+    "idx": 1,
+    "night_order": 2,
+    "role": "狼人",
+    "team": "狼人阵营"
+  },
+  {
+    "ability": "夜晚选择目标进行袭击",
+    "class": "RoleCard",
+    "display_name": "狼人 2",
+    "has_night_action": true,
+    "id": 2,
+    "idx": 2,
+    "night_order": 2,
+    "role": "狼人",
+    "team": "狼人阵营"
+  },
+  {
+    "ability": "夜晚选择目标进行袭击",
+    "class": "RoleCard",
+    "display_name": "狼人 3",
+    "has_night_action": true,
+    "id": 3,
+    "idx": 3,
+    "night_order": 2,
+    "role": "狼人",
+    "team": "狼人阵营"
+  },
+  {
+    "ability": "夜晚选择目标进行袭击",
+    "class": "RoleCard",
+    "display_name": "狼人 4",
+    "has_night_action": true,
+    "id": 4,
+    "idx": 4,
+    "night_order": 2,
+    "role": "狼人",
+    "team": "狼人阵营"
+  },
+  {
+    "ability": "白天发言投票，无夜间技能",
+    "class": "RoleCard",
+    "display_name": "村民 1",
+    "has_night_action": false,
+    "id": 5,
+    "idx": 1,
+    "night_order": 0,
+    "role": "村民",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "白天发言投票，无夜间技能",
+    "class": "RoleCard",
+    "display_name": "村民 2",
+    "has_night_action": false,
+    "id": 6,
+    "idx": 2,
+    "night_order": 0,
+    "role": "村民",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "白天发言投票，无夜间技能",
+    "class": "RoleCard",
+    "display_name": "村民 3",
+    "has_night_action": false,
+    "id": 7,
+    "idx": 3,
+    "night_order": 0,
+    "role": "村民",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "白天发言投票，无夜间技能",
+    "class": "RoleCard",
+    "display_name": "村民 4",
+    "has_night_action": false,
+    "id": 8,
+    "idx": 4,
+    "night_order": 0,
+    "role": "村民",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "夜晚查验一名玩家阵营",
+    "class": "RoleCard",
+    "display_name": "预言家",
+    "has_night_action": true,
+    "id": 9,
+    "night_order": 3,
+    "role": "预言家",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "拥有一瓶解药与一瓶毒药，夜晚可选择使用",
+    "class": "RoleCard",
+    "display_name": "女巫",
+    "has_night_action": true,
+    "id": 10,
+    "night_order": 4,
+    "role": "女巫",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "死亡时可选择开枪带走一人",
+    "class": "RoleCard",
+    "display_name": "猎人",
+    "has_night_action": false,
+    "id": 11,
+    "night_order": 0,
+    "role": "猎人",
+    "team": "好人阵营"
+  },
+  {
+    "ability": "夜晚守护一人，被守护者免疫狼人袭击",
+    "class": "RoleCard",
+    "display_name": "守卫",
+    "has_night_action": true,
+    "id": 12,
+    "night_order": 1,
+    "role": "守卫",
+    "team": "好人阵营"
+  }
+]

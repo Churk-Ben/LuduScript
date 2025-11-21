@@ -1,0 +1,72 @@
+num(card_id) { 1 }
+
+for(i, 1, 4) {
+    obj("RoleCard", card_id) {
+        str(role) { "狼人" }
+        str(team) { "狼人阵营" }
+        bool(has_night_action) { true }
+        num(night_order) { 2 }
+        str(ability) { "夜晚选择目标进行袭击" }
+        str(display_name) {
+            str(idx) {}
+            idx = i
+            "狼人 " + idx
+        }
+    }
+    card_id = card_id + 1
+}
+
+for(i, 1, 4) {
+    obj("RoleCard", card_id) {
+        str(role) { "村民" }
+        str(team) { "好人阵营" }
+        bool(has_night_action) { false }
+        num(night_order) { 0 }
+        str(ability) { "白天发言投票，无夜间技能" }
+        str(display_name) {
+            str(idx) {}
+            idx = i
+            "村民 " + idx
+        }
+    }
+    card_id = card_id + 1
+}
+
+obj("RoleCard", card_id) {
+    str(role) { "预言家" }
+    str(team) { "好人阵营" }
+    bool(has_night_action) { true }
+    num(night_order) { 3 }
+    str(ability) { "夜晚查验一名玩家阵营" }
+    str(display_name) { "预言家" }
+}
+card_id = card_id + 1
+
+obj("RoleCard", card_id) {
+    str(role) { "女巫" }
+    str(team) { "好人阵营" }
+    bool(has_night_action) { true }
+    num(night_order) { 4 }
+    str(ability) { "拥有一瓶解药与一瓶毒药，夜晚可选择使用" }
+    str(display_name) { "女巫" }
+}
+card_id = card_id + 1
+
+obj("RoleCard", card_id) {
+    str(role) { "猎人" }
+    str(team) { "好人阵营" }
+    bool(has_night_action) { false }
+    num(night_order) { 0 }
+    str(ability) { "死亡时可选择开枪带走一人" }
+    str(display_name) { "猎人" }
+}
+card_id = card_id + 1
+
+obj("RoleCard", card_id) {
+    str(role) { "守卫" }
+    str(team) { "好人阵营" }
+    bool(has_night_action) { true }
+    num(night_order) { 1 }
+    str(ability) { "夜晚守护一人，被守护者免疫狼人袭击" }
+    str(display_name) { "守卫" }
+}

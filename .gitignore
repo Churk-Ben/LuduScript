@@ -71,3 +71,4 @@ luduscript-1.0.0/
 cmake-build-debug/
 .idea/
 .vscode/
+.cache/
